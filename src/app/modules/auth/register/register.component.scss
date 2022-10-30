@@ -27,5 +27,12 @@
     color: $c3;
     text-decoration: none;
     display: inline-block;
+    cursor: pointer;
   }
+}
+
+.invalid {
+  background-color: $c5;
+  color: $c12;
+  cursor: not-allowed;
 }

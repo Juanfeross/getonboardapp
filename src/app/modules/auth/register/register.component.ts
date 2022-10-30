@@ -23,6 +23,8 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {
     this.registerForm = this._formBuilder.group({
+      name: new FormControl<string>('', [Validators.required]),
+      lastName: new FormControl<string>('', [Validators.required]),
       email: new FormControl<string>('', [
         Validators.required,
         Validators.email,
@@ -34,7 +36,5 @@ export class RegisterComponent implements OnInit {
     });
   }
 
-  register(): void {
-    console.log(this.registerForm.getRawValue());
-  }
+  register(): void {}
 }

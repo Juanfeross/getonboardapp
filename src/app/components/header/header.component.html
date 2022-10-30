@@ -9,7 +9,7 @@
       <li class="list__item"><a href="#">Contacto</a></li>
     </ul>
     <ul class="button-list">
-      <li class="button-list__item">
+      <li class="button-list__item" *ngIf="!(isAuthenticated$ | async)">
         <a (click)="showLoginDialog()" class="boton">
           <img
             class="sign-in-button button"
@@ -18,12 +18,23 @@
           />
         </a>
       </li>
-      <li class="button-list__item">
+
+      <li class="button-list__item" *ngIf="!(isAuthenticated$ | async)">
         <a (click)="showRegisterDialog()" class="boton">
           <img
             class="sign-up-button button"
             src="./../../../assets/images/icons/sign-up.svg"
             alt="Registro"
+          />
+        </a>
+      </li>
+
+      <li class="button-list__item" *ngIf="isAuthenticated$ | async">
+        <a (click)="logout()" class="boton">
+          <img
+            class="sign-up-button button"
+            src="./../../../assets/images/icons/sign-in.svg"
+            alt="Salir del sistema"
           />
         </a>
       </li>

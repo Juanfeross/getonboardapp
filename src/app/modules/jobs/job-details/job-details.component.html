@@ -1,0 +1,34 @@
+<div class="item-job">
+  <h1 mat-dialog-title>
+    {{ data.attributes.title }}
+  </h1>
+  <mat-dialog-content>
+    <h3>Categoría: {{ data.attributes.category_name }}</h3>
+    <h3>País: {{ data.attributes.country }}</h3>
+
+    <ng-container *ngIf="data.attributes.functions.length > 1">
+      <h2>{{ data.attributes.functions_headline }}</h2>
+      <div [innerHtml]="data.attributes.functions"></div>
+    </ng-container>
+
+    <ng-container *ngIf="data.attributes.description.length > 1">
+      <h2>{{ data.attributes.description_headline }}</h2>
+      <div [innerHtml]="data.attributes.description"></div>
+    </ng-container>
+
+    <ng-container *ngIf="data.attributes.desirable.length > 1">
+      <h2>{{ data.attributes.desirable_headline }}</h2>
+      <div [innerHtml]="data.attributes.desirable"></div>
+    </ng-container>
+
+    <ng-container *ngIf="data.attributes.benefits.length > 1">
+      <h2>{{ data.attributes.benefits_headline }}</h2>
+      <div [innerHtml]="data.attributes.benefits"></div>
+    </ng-container>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button class="item-job__button" type="button" (click)="addToFavorites()">
+      Agregar a favoritos
+    </button>
+  </mat-dialog-actions>
+</div>

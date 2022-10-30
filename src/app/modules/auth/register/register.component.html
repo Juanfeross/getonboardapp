@@ -1,6 +1,24 @@
 <h1 mat-dialog-title>Cree una cuenta nueva</h1>
 <div mat-dialog-content>
   <form [formGroup]="registerForm">
+    <label for="name"><b>Nombre</b></label>
+    <input
+      class="form__input"
+      type="text"
+      formControlName="name"
+      placeholder="Ingrese su nombre"
+      name="name"
+    />
+
+    <label for="lastName"><b>Apellido</b></label>
+    <input
+      class="form__input"
+      type="text"
+      formControlName="lastName"
+      placeholder="Ingrese su apellido"
+      name="lastName"
+    />
+
     <label for="email"><b>Correo</b></label>
     <input
       class="form__input"
@@ -20,8 +38,9 @@
     />
   </form>
 </div>
-<div mat-dialog-actions>
+<div mat-dialog-actions align="center">
   <button
+    [ngClass]="{ invalid: registerForm.invalid }"
     class="form__button"
     type="button"
     (click)="register()"

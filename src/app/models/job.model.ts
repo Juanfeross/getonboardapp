@@ -1,6 +1,7 @@
 export interface JobAttributes {
   title: string;
   description_headline: string;
+  description: string;
   functions_headline?: string | null;
   functions: string;
   benefits_headline: string;
