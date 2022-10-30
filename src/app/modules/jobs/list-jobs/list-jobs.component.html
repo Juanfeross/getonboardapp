@@ -1,3 +1,12 @@
 <div class="list-jobs">
-  <div class="job" *ngFor="let job of jobs; let i = index"></div>
+  <div class="job" *ngFor="let job of jobs; let i = index">
+    <p class="job__title">
+      {{ job.attributes.title }}
+    </p>
+    <div class="job-actions">
+      <button mat-icon-button matTooltip="Add to my favorites">
+        <mat-icon>add_circle_outline</mat-icon>
+      </button>
+    </div>
+  </div>
 </div>

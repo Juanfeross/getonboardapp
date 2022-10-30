@@ -1,0 +1,10 @@
+@import "abstracts/mixins/mixin.scss";
+@import "base/base.scss";
+
+%input-custom {
+  outline: none;
+  height: 40px;
+  padding: 5px 15px;
+  @include border-radius(6px);
+  border: 0;
+}

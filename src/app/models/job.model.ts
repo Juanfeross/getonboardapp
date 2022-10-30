@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 export interface JobAttributes {
   title: string;
   description_headline: string;

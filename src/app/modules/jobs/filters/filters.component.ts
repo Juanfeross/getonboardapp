@@ -43,7 +43,6 @@ export class FiltersComponent implements OnInit, OnDestroy {
       this.companyService.search(),
     ]);
     subscribe.pipe(take(1)).subscribe(([category, company]) => {
-      console.log(category, company);
       this.categories = category.data;
       this.tempCategories = category.data;
       this.companies = company.data;
