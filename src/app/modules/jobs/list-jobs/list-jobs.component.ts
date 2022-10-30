@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { IPagination, Meta } from '@core/models';
 import { Job } from 'src/app/models/job.model';
 import { JobsService } from 'src/app/services/api/jobs.service';
 
@@ -9,12 +10,18 @@ import { JobsService } from 'src/app/services/api/jobs.service';
 })
 export class ListJobsComponent implements OnInit {
   public jobs: Job[] = [];
+  public pagination?: Meta;
   constructor(private jobsService: JobsService) {}
 
   ngOnInit(): void {
+    this.getListJobs(1);
+  }
+
+  public getListJobs(page: number) {
     this.jobsService.search().subscribe((x) => {
       this.jobs = x.data;
-      console.log(x, this.jobs);
+      this.pagination = x.meta;
+      console.log(x);
     });
   }
 }

@@ -1,0 +1,23 @@
+<div class="container-pagination" *ngIf="viewPage.length > 0 && pagination">
+  <div
+    class="action"
+    *ngIf="selectPage > 1"
+    (click)="action(selectPage - 1 + '')"
+  >
+    <mat-icon>arrow_back_ios</mat-icon>
+  </div>
+  <button
+    class="page {{ selectPage === +(page.text ?? 1) ? 'page--selected' : '' }}"
+    *ngFor="let page of viewPage"
+    (click)="action(page.text)"
+  >
+    {{ page.text }}
+  </button>
+  <div
+    class="action"
+    *ngIf="selectPage < pagination.page"
+    (click)="action(selectPage + 1 + '')"
+  >
+    <mat-icon>arrow_forward_ios</mat-icon>
+  </div>
+</div>

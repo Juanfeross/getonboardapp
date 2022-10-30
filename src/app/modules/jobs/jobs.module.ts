@@ -9,6 +9,7 @@ import { ListJobsComponent } from './list-jobs/list-jobs.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { PaginationModule } from '@shared/pagination/pagination.module';
 
 @NgModule({
   declarations: [FiltersComponent, ListJobsComponent],
@@ -22,6 +23,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     ReactiveFormsModule,
     MatIconModule,
     MatTooltipModule,
+    PaginationModule,
   ],
   exports: [FiltersComponent, ListJobsComponent],
 })

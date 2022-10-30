@@ -1,6 +1,10 @@
 <form class="form" [formGroup]="filtersFrom">
   <div class="form-search">
-    <input type="text" placeholder="Search Job..." class="form-search__input" />
+    <input
+      type="text"
+      placeholder="Buscar trabajo..."
+      class="form-search__input"
+    />
     <input
       class="form-search__icon"
       type="image"
@@ -13,7 +17,7 @@
     <input
       type="text"
       class="form__input"
-      placeholder="Company"
+      placeholder="Compañía"
       aria-label="Number"
       formControlName="company"
       autocomplete="off"
@@ -30,7 +34,7 @@
     <input
       type="text"
       class="form__input"
-      placeholder="Category"
+      placeholder="Categoría"
       aria-label="Number"
       formControlName="category"
       [matAutocomplete]="auto"

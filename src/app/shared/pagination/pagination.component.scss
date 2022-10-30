@@ -1,0 +1,64 @@
+@import "abstracts/colors/colors.scss";
+@import "base/base";
+.container-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: $c1;
+  .action {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .page {
+    position: relative;
+    @include wh(15px, 15px);
+    color: $c1;
+    background-color: $c7;
+    @include clip-path(
+      polygon(0 0, 100% 0, 100% 100%, 60% 90%, 50% 100%, 40% 90%, 0 100%)
+    );
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    cursor: pointer;
+    margin-right: 10px;
+    border-radius: 4px;
+    border: 0;
+
+    &__toolbar {
+      position: absolute;
+      background: #1c1c1c;
+      padding: 0px 8px;
+      height: 30px;
+      line-height: 30px;
+      text-align: center;
+      border-radius: 3px;
+      font-size: 15px;
+      top: 12px;
+      left: 0px;
+      transition: all 500ms ease;
+      opacity: 0;
+      visibility: hidden;
+      z-index: -1;
+      &:after {
+        position: absolute;
+        content: "";
+        border-left: 7px solid transparent;
+        border-right: 6px solid #1c1c1c;
+        border-top: 7px solid transparent;
+        border-bottom: 7px solid transparent;
+        right: 100%;
+        top: 8px;
+      }
+    }
+    &:hover,
+    &--selected {
+      @include transform(scale(1.2));
+      background-color: $c9;
+      color: $c1;
+      font-weight: 600;
+    }
+  }
+}

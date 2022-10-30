@@ -1,12 +1,24 @@
 <div class="list-jobs">
+  <p class="list-jobs__quantity">
+    Cantidad total:
+    {{ (pagination?.total_pages ?? 1) * (pagination?.per_page ?? 0) }}
+  </p>
   <div class="job" *ngFor="let job of jobs; let i = index">
     <p class="job__title">
       {{ job.attributes.title }}
     </p>
     <div class="job-actions">
-      <button mat-icon-button matTooltip="Add to my favorites">
+      <button mat-icon-button title="Add to my favorites">
         <mat-icon>add_circle_outline</mat-icon>
+      </button>
+      <button mat-icon-button title="See more">
+        <mat-icon>visibility</mat-icon>
       </button>
     </div>
   </div>
+  <app-pagination
+    [pagination]="pagination"
+    *ngIf="pagination"
+    (actionPage)="getListJobs($event)"
+  ></app-pagination>
 </div>

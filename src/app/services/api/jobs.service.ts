@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { ServerResponse } from '@core/models';
+import { Meta, ServerResponse } from '@core/models';
 import { BaseService } from '@core/services/base.service';
 import { Job } from 'src/app/models/job.model';
 
@@ -14,10 +14,9 @@ export class JobsService extends BaseService<Job> {
 
   public search(
     data: string = 'a',
-    page: number = 1,
-    per_page: number = 12
+    meta: Meta = { page: 1, per_page: 12 }
   ): Observable<ServerResponse<Job[]>> {
-    let query: string = `?query=${data}&per_page=${per_page}&page=${page}`;
+    let query: string = `?query=${data}&per_page=${meta.per_page}&page=${meta.page}`;
     return this.get(`/search/jobs${query}`);
   }
 }

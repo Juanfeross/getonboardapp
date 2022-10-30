@@ -1,8 +1,22 @@
+@import "abstracts/colors/colors.scss";
+.list-jobs {
+  &__quantity {
+    font-weight: 600;
+    color: $c10;
+    text-align: end;
+  }
+}
 .job {
   display: flex;
   align-items: center;
+  &__title {
+    margin: 0;
+    font-weight: 600;
+  }
 }
 
 .job-actions {
   margin: 0 0 0 auto;
+  display: flex;
+  gap: 5px;
 }
