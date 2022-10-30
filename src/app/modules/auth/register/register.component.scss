@@ -1,0 +1,31 @@
+@import "abstracts/colors/colors.scss";
+@import "abstracts/mixins/mixin.scss";
+@import "abstracts/silents/silents.scss";
+@import "base/base.scss";
+
+.form {
+  display: flex;
+  gap: 10px;
+  justify-content: end;
+  &__input {
+    width: 100%;
+    @extend %input-custom;
+    border: 1px solid $c3;
+    &:hover {
+      outline: none !important;
+      border: 1px solid $c5;
+      box-shadow: 0 0 1px $c4;
+    }
+  }
+
+  &__button {
+    margin-top: 5px;
+    background-color: $c10;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    color: $c3;
+    text-decoration: none;
+    display: inline-block;
+  }
+}

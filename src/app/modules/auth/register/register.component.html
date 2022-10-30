@@ -1,0 +1,32 @@
+<h1 mat-dialog-title>Cree una cuenta nueva</h1>
+<div mat-dialog-content>
+  <form [formGroup]="registerForm">
+    <label for="email"><b>Correo</b></label>
+    <input
+      class="form__input"
+      type="email"
+      formControlName="email"
+      placeholder="Ingresa el email"
+      name="email"
+    />
+
+    <label for="password"><b>Contraseña</b></label>
+    <input
+      class="form__input"
+      type="password"
+      formControlName="password"
+      placeholder="Ingresa la contraseña"
+      name="password"
+    />
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button
+    class="form__button"
+    type="button"
+    (click)="register()"
+    [disabled]="registerForm.invalid"
+  >
+    Registrar
+  </button>
+</div>
