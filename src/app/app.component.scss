@@ -1,0 +1,16 @@
+@import "abstracts/colors/colors.scss";
+@import "abstracts/mixins/mixin.scss";
+@import "base/base.scss";
+.container {
+  min-height: calc(100% - 200px);
+  background-color: $c4;
+  display: flex;
+  justify-content: center;
+  padding-top: 25px;
+  padding-bottom: 25px;
+}
+
+.container-data {
+  padding: szrem(15) szrem(5);
+  @include size-content();
+}

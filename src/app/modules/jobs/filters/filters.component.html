@@ -1,0 +1,35 @@
+<form class="form" [formGroup]="filtersFrom">
+  <input
+    type="text"
+    class="form__input"
+    placeholder="Company"
+    aria-label="Number"
+    formControlName="company"
+    autocomplete="off"
+    [matAutocomplete]="company"
+  />
+  <mat-autocomplete #company="matAutocomplete">
+    <mat-option
+      *ngFor="let option of tempCompanies"
+      [value]="option.attributes.name"
+    >
+      {{ option.attributes.name }}
+    </mat-option>
+  </mat-autocomplete>
+  <input
+    type="text"
+    class="form__input"
+    placeholder="Category"
+    aria-label="Number"
+    formControlName="category"
+    [matAutocomplete]="auto"
+  />
+  <mat-autocomplete #auto="matAutocomplete">
+    <mat-option
+      *ngFor="let option of tempCategories"
+      [value]="option.attributes.name"
+    >
+      {{ option.attributes.name }}
+    </mat-option>
+  </mat-autocomplete>
+</form>

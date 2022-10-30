@@ -1,0 +1,31 @@
+@import "abstracts/colors/colors.scss";
+@import "abstracts/mixins/mixin.scss";
+@import "base/base.scss";
+
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: $c3;
+  height: szrem(60);
+  padding-left: szrem(5);
+  padding-right: szrem(5);
+}
+.nav {
+  @include size-content();
+}
+
+.list {
+  display: flex;
+  list-style-type: none;
+  padding-inline-start: 0;
+}
+
+.list-options-link {
+  text-decoration: none;
+  &__title {
+    margin: 0;
+    color: $c1;
+    font-weight: 600;
+  }
+}
