@@ -2,12 +2,12 @@
 @import "abstracts/mixins/mixin.scss";
 @import "base/base.scss";
 .container {
-  min-height: calc(100% - 200px);
+  min-height: calc(100vh - 7rem - 7rem);
   background-color: $c4;
   display: flex;
   justify-content: center;
-  padding-top: 25px;
-  padding-bottom: 25px;
+  padding-top: 2.5rem;
+  padding-bottom: 2.5rem;
 }
 
 .container-data {
