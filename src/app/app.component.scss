@@ -2,8 +2,11 @@
 @import "abstracts/mixins/mixin.scss";
 @import "base/base.scss";
 .container {
-  min-height: calc(100vh - 7rem - 7rem);
-  background-color: $c4;
+  min-height: calc(100vh - 7rem - 10rem);
+  background-image: url(./../assets/images/backgrounds/landbackground.png);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
   display: flex;
   justify-content: center;
   padding-top: 2.5rem;

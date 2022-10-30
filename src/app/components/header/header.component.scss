@@ -1,9 +1,7 @@
 @import "abstracts/colors/colors.scss";
-@import "abstracts/mixins/mixin.scss";
-@import "base/base.scss";
 
 .header {
-  background-color: $c3;
+  background-color: $c4;
   height: 7rem;
   font-family: Comfortaa, Arial, Helvetica, sans-serif;
 }
@@ -15,18 +13,11 @@
 }
 
 .list {
-  display: flex;
-  align-items: center;
-  list-style: none;
-  padding-left: 1rem;
-  font-size: 1.8rem;
+  display: none;
 }
 
 .button-list {
-  order: 2;
-  display: flex;
-  align-items: center;
-  list-style: none;
+  display: none;
 }
 
 .list__item {
@@ -48,26 +39,206 @@
   &__title {
     font-family: Comfortaa, Arial, Helvetica, sans-serif;
     margin: 0;
-    color: $c1;
+    color: $c8;
+    font-size: 4rem;
     font-weight: 600;
   }
 }
 
-.boton {
-	border: none;
-	min-width: 100%;
-	height: 4rem;
-	padding: 0 2rem;
-	background: black;
-	color: white;
-	display: inline-block;
-	border-radius: 100px;
-	text-decoration: none;
-	display: inline-flex;
-	justify-content: space-between;
-	align-items: center;
-	background-color: rgb(0, 0, 98);
-	transition: .3s ease all;
+.button {
+  width: 5.5rem;
+}
+
+.search-bar {
+  display: none;
+}
+
+@media (min-width: 418px) {
+  .header {
+    background-color: $c4;
+    height: 7rem;
+    font-family: Comfortaa, Arial, Helvetica, sans-serif;
+  }
+  .nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    height: 100%;
+  }
+
+
+  .list {
+    display: none;
+  }
+
+  .button-list {
+    order: 2;
+    display: flex;
+    align-items: center;
+    list-style: none;
+    width: 31.8562rem;
+  }
+
+  .list__item {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .button-list__item {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .list-options-link {
+    order: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    &__title {
+      font-family: Comfortaa, Arial, Helvetica, sans-serif;
+      margin: 0;
+      color: $c8;
+      font-size: 4rem;
+      font-weight: 600;
+    }
+  }
+
+  .button {
+    width: 5.5rem;
+  }
+}
+
+@media (min-width: 741px) {
+  .header {
+    background-color: $c4;
+    height: 7rem;
+    font-family: Comfortaa, Arial, Helvetica, sans-serif;
+  }
+  .nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    height: 100%;
+  }
+
+
+  .list {
+    display: none;
+  }
+
+  .button-list {
+    order: 2;
+    display: flex;
+    align-items: center;
+    list-style: none;
+    width: 31.8562rem;
+  }
+
+  .list__item {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .button-list__item {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .list-options-link {
+    order: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    &__title {
+      font-family: Comfortaa, Arial, Helvetica, sans-serif;
+      margin: 0;
+      color: $c8;
+      font-size: 4rem;
+      font-weight: 600;
+    }
+  }
+
+  .button {
+    width: 5.5rem;
+  }
+
+  .search-bar {
+    display: block;
+    height: 4rem;
+    border-radius: 10rem;
+    border: solid .2rem;
+    padding-left: 1.5rem;
+    background: url("./../../../assets/images/icons/search-button.svg") 15.5rem no-repeat;
+  }
+}
+
+@media (min-width: 1137px) {
+  .header {
+    background-color: $c4;
+    height: 7rem;
+    font-family: Comfortaa, Arial, Helvetica, sans-serif;
+  }
+  .nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    height: 100%;
+  }
+
+
+  .list {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    font-size: 2.3rem;
+  }
+
+  .button-list {
+    order: 2;
+    display: flex;
+    align-items: center;
+    list-style: none;
+    width: 31.8562rem;
+  }
+
+  .list__item {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .button-list__item {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .list-options-link {
+    order: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    &__title {
+      font-family: Comfortaa, Arial, Helvetica, sans-serif;
+      margin: 0;
+      color: $c8;
+      font-size: 4rem;
+      font-weight: 600;
+    }
+  }
+
+  .button {
+    width: 5.5rem;
+  }
+
+  .search-bar {
+    height: 4rem;
+    border-radius: 10rem;
+    border: solid .2rem;
+    padding-left: 1.5rem;
+    background: url("./../../../assets/images/icons/search-button.svg") 15.5rem no-repeat;
+  }
 }
 
 @font-face {
