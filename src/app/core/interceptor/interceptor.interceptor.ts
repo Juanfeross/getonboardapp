@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
 import {
-  HttpRequest,
-  HttpHandler,
-  HttpEvent,
-  HttpInterceptor,
   HttpErrorResponse,
+  HttpEvent,
+  HttpHandler,
+  HttpInterceptor,
+  HttpRequest,
 } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { catchError, finalize, Observable, throwError } from 'rxjs';
 import { LoadingService } from 'src/app/services/app/loading.service';
 
@@ -20,7 +20,7 @@ export class InterceptorServices implements HttpInterceptor {
     this.loadingService.ChangesLoading(true);
     req = req.clone({
       setHeaders: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
+        Authorization: `Bearer ${sessionStorage.getItem('accessToken')}`,
       },
     });
 

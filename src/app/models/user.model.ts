@@ -1,7 +1,11 @@
-import { Job } from './job.model';
+import { SelectedJob } from './selected-job.model';
 
 export interface User {
+  id: number;
   name: string;
+  lastName: string;
   email: string;
-  favoriteJobs: Job[];
+  roles: string[];
+  createdAt: string;
+  selectedJobs: SelectedJob[];
 }

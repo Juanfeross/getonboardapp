@@ -8,6 +8,8 @@ import {
 } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AuthService } from '@core/auth/auth.service';
+import { User } from 'src/app/models/user.model';
+import { SelectedJobService } from 'src/app/services/api/selected-job.service';
 
 @Component({
   selector: 'app-login',
@@ -20,6 +22,7 @@ export class LoginComponent implements OnInit {
 
   constructor(
     public matDialogRef: MatDialogRef<LoginComponent>,
+    private _selectedJobs: SelectedJobService,
     private _authService: AuthService,
     private _formBuilder: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public _data: any
@@ -33,13 +36,12 @@ export class LoginComponent implements OnInit {
       ]),
       password: new FormControl<string>('', [
         Validators.required,
-        Validators.minLength(6),
+        Validators.minLength(8),
       ]),
     });
   }
 
   login(): void {
-    console.log(this.loginForm.getRawValue());
     if (this.loginForm.invalid) {
       return;
     }
