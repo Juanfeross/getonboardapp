@@ -4,9 +4,17 @@
       <h1 class="list-options-link__title">getonboard</h1>
     </a>
     <ul class="list">
-      <li class="list__item"><a href="#">Inicio</a></li>
-      <li class="list__item"><a href="#">Acerca</a></li>
-      <li class="list__item"><a href="#">Contacto</a></li>
+      <li class="list__item">
+        <a [routerLink]="['/']" routerLinkActive="router-link-active">Inicio</a>
+      </li>
+      <li class="list__item">
+        <a
+          [routerLink]="['/favorites']"
+          routerLinkActive="router-link-active"
+          *ngIf="isAuthenticated$ | async"
+          >Favoritos</a
+        >
+      </li>
     </ul>
     <ul class="button-list">
       <li class="button-list__item" *ngIf="!(isAuthenticated$ | async)">

@@ -33,7 +33,7 @@ export class ListJobsComponent implements OnInit {
   public showJobDetailsDialog(job: Job) {
     const dialogRef = this._matDialog.open(JobDetailsComponent, {
       data: job,
-      width: '600px',
+      width: '700px',
       height: 'auto',
     });
 

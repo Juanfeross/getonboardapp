@@ -11,6 +11,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
 
 import { MatDialogModule } from '@angular/material/dialog';
+import { ConfirmationModule } from '@core/confirmation/confirmation.module';
 import { AuthModule } from './modules/auth/auth.module';
 
 @NgModule({
@@ -23,6 +24,7 @@ import { AuthModule } from './modules/auth/auth.module';
     SpinnerModule,
     AuthModule,
     MatDialogModule,
+    ConfirmationModule,
   ],
   providers: [
     {

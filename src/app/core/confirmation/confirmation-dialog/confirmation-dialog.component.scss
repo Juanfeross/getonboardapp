@@ -3,7 +3,7 @@
 @import "abstracts/silents/silents.scss";
 @import "base/base.scss";
 
-.item-job {
+.confirmation-dialog {
   &__button {
     margin-top: 5px;
     background-color: $c10;
@@ -15,10 +15,4 @@
     display: inline-block;
     cursor: pointer;
   }
-}
-
-.invalid {
-  background-color: $c5;
-  color: $c12;
-  cursor: not-allowed;
 }

@@ -1,0 +1,26 @@
+<ng-container *ngIf="data.title">
+  <h1 mat-dialog-title>{{ data.title }}</h1>
+</ng-container>
+<mat-dialog-content>
+  <div [innerHtml]="data.message"></div>
+</mat-dialog-content>
+<ng-container *ngIf="data.actions?.confirm?.show || data.actions?.cancel?.show">
+  <mat-dialog-actions align="end">
+    <ng-container
+      *ngIf="data.actions?.cancel?.show"
+      [matDialogClose]="'cancelled'"
+    >
+      <button class="confirmation-dialog__button">
+        {{ data.actions?.cancel?.label }}
+      </button>
+    </ng-container>
+    <ng-container *ngIf="data.actions?.confirm?.show">
+      <button
+        class="confirmation-dialog__button"
+        [matDialogClose]="'confirmed'"
+      >
+        {{ data.actions?.confirm?.label }}
+      </button>
+    </ng-container>
+  </mat-dialog-actions>
+</ng-container>
