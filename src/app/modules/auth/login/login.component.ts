@@ -7,10 +7,11 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { AuthService } from '@core/auth/auth.service';
 import { User } from 'src/app/models/user.model';
 import { LoginService } from 'src/app/services/api/login.service';
 import { SelectedJobService } from 'src/app/services/api/selected-job.service';
+import { AuthService } from 'src/app/services/app/auth.service';
+import { UserService } from 'src/app/services/app/user.service';
 
 @Component({
   selector: 'app-login',
@@ -24,9 +25,10 @@ export class LoginComponent implements OnInit {
   constructor(
     public matDialogRef: MatDialogRef<LoginComponent>,
     private _selectedJobs: SelectedJobService,
-    private _authService: AuthService,
     private _formBuilder: FormBuilder,
     private loginService: LoginService,
+    private authService: AuthService,
+    private userService: UserService,
     @Inject(MAT_DIALOG_DATA) public _data: any
   ) {}
 
@@ -50,7 +52,11 @@ export class LoginComponent implements OnInit {
 
     this.loginForm.disable();
     this.loginService.login('/auth/login', this.loginForm.value).subscribe({
-      next: () => {
+      next: (response) => {
+        if (response.data && response.data.user) {
+          this.authService.authenticate(response.data);
+          this.userService.setUser(response.data.user);
+        }
         this.matDialogRef.close();
       },
       error: () => {

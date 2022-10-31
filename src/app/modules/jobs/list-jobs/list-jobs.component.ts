@@ -75,7 +75,7 @@ export class ListJobsComponent implements OnInit, OnDestroy {
   }
 
   public addJobToUser(job: Job) {
-    console.log(this.user);
+    console.log(job, this.user);
     if (this.user) {
       this._selectedJobService
         .add(this.user.id, [{ id: 0, jobId: job.id }])
