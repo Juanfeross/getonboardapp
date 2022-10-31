@@ -4,6 +4,15 @@
 
 .container {
   display: block;
+
+  &__image{
+    width: 350px;
+    height: 300px;
+    display:block;
+    margin:auto;
+    border-radius: 10px;
+  }
+
   &__title{
     margin-top: 5rem;
     text-align: center;
@@ -95,8 +104,6 @@
   }
 
 }
-
-
 
 
 @font-face {
