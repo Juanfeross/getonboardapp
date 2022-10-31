@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { UserService } from '@core/user/user.service';
+import { UserService } from 'src/app/services/app/user.service';
 import { environment } from '@environment/environment';
 import {
   BehaviorSubject,
@@ -102,13 +102,14 @@ export class AuthService {
     this._authenticated$.next(false);
 
     this._userService.selectedJobs = [];
-    this._userService.user = undefined;
+    // this._userService.user = {};
 
     // Return the observable
     return of(true);
   }
 
   check(): Observable<boolean> {
+    console.log(this._authenticated$.value);
     // Check if the user is logged in
     if (this._authenticated$.value) {
       return of(true);

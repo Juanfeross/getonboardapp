@@ -9,6 +9,13 @@ const routes: Routes = [
       import('./pages/home/home.module').then((m) => m.HomeModule),
   },
   {
+    path: 'jobs',
+    loadChildren: () =>
+      import('./pages/view-jobs/view-jobs.module').then(
+        (m) => m.ViewJobsModule
+      ),
+  },
+  {
     path: 'favorites',
     loadChildren: () =>
       import('./pages/favorite-jobs/favorite-jobs.module').then(

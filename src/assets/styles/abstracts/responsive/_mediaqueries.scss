@@ -1,0 +1,12 @@
+@mixin brp($punto, $type: max, $units: px, $means: screen) {
+  //Max => hasta //min => desde
+  @if $type == max {
+    @media only #{$means} and (max-width: #{$punto}#{$units}) {
+      @content;
+    }
+  } @else if $type == min {
+    @media only #{$means} and (min-width: #{$punto}#{$units}) {
+      @content;
+    }
+  }
+}

@@ -9,6 +9,7 @@ import {
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AuthService } from '@core/auth/auth.service';
 import { User } from 'src/app/models/user.model';
+import { LoginService } from 'src/app/services/api/login.service';
 import { SelectedJobService } from 'src/app/services/api/selected-job.service';
 
 @Component({
@@ -25,6 +26,7 @@ export class LoginComponent implements OnInit {
     private _selectedJobs: SelectedJobService,
     private _authService: AuthService,
     private _formBuilder: FormBuilder,
+    private loginService: LoginService,
     @Inject(MAT_DIALOG_DATA) public _data: any
   ) {}
 
@@ -47,17 +49,14 @@ export class LoginComponent implements OnInit {
     }
 
     this.loginForm.disable();
-
-    this._authService.loginUser(this.loginForm.value).subscribe(
-      (response) => {
-        console.log(response);
+    this.loginService.login('/auth/login', this.loginForm.value).subscribe({
+      next: () => {
         this.matDialogRef.close();
       },
-      (error) => {
-        console.log(error);
+      error: () => {
         this.loginForm.enable();
         this.loginNgForm.resetForm();
-      }
-    );
+      },
+    });
   }
 }

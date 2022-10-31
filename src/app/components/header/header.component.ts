@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { AuthService } from '@core/auth/auth.service';
 import { Observable } from 'rxjs';
 import { LoginComponent } from 'src/app/modules/auth/login/login.component';
 import { RegisterComponent } from 'src/app/modules/auth/register/register.component';
+import { AuthService } from 'src/app/services/app/auth.service';
 
 @Component({
   selector: 'app-header',

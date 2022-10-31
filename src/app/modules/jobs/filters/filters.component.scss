@@ -1,13 +1,26 @@
 @import "abstracts/colors/colors.scss";
 @import "abstracts/mixins/mixin.scss";
 @import "abstracts/silents/silents.scss";
+@import "abstracts/responsive/mediaqueries.scss";
 @import "base/base.scss";
 
 .form {
   display: flex;
   gap: 10px;
+  margin-bottom: 15px;
   &__input {
     @extend %input-custom;
+    &--company {
+      margin-bottom: 15px;
+      width: 236px;
+    }
+    &--category {
+      width: 236px;
+    }
+  }
+  @include brp(750) {
+    flex-wrap: wrap;
+    justify-content: center;
   }
 }
 
@@ -36,4 +49,11 @@
   margin: 0 0 0 auto;
   display: flex;
   gap: 10px;
+  @include brp(750) {
+    margin: 0;
+  }
+  @include brp(423) {
+    display: block;
+    text-align: center;
+  }
 }

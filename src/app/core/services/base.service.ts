@@ -9,4 +9,9 @@ export abstract class BaseService<T> {
     const apiUrl = `${this.apiRoot}${endPoint}`;
     return this.http.get<ServerResponse<T[]>>(apiUrl);
   }
+
+  public post(endPoint: string, object: T): Observable<ServerResponse<T>> {
+    const apiUrl = `${this.apiRoot}${endPoint}`;
+    return this.http.post<ServerResponse<T>>(apiUrl, object);
+  }
 }

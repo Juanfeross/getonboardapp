@@ -14,7 +14,12 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ConfirmationModule } from '@core/confirmation/confirmation.module';
 import { AuthModule } from './modules/auth/auth.module';
+import { JwtModule } from '@auth0/angular-jwt';
+import { environment } from '@environment/environment';
 
+export function tokenGetter2() {
+  return localStorage.getItem('token');
+}
 @NgModule({
   declarations: [AppComponent, FooterComponent, HeaderComponent],
   imports: [
@@ -27,6 +32,13 @@ import { AuthModule } from './modules/auth/auth.module';
     MatDialogModule,
     MatTooltipModule,
     ConfirmationModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter2,
+        // whitelistedDomains: [environment.endpointv1],
+        // blacklistedRoutes: [environment.endpointv1 + '/account/login']
+      },
+    }),
   ],
   providers: [
     {

@@ -2,25 +2,25 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, ReplaySubject } from 'rxjs';
 import { SelectedJob } from 'src/app/models/selected-job.model';
 import { User } from 'src/app/models/user.model';
+import { SessionStorageService } from './session-storage.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  private _user: ReplaySubject<User | undefined> = new ReplaySubject<
-    User | undefined
-  >(1);
+  private _user: ReplaySubject<User> = new ReplaySubject<User>(1);
   private _selectedJobs: ReplaySubject<SelectedJob[]> = new ReplaySubject<
     SelectedJob[]
   >(1);
 
-  constructor() {}
+  constructor(private sessionStorage: SessionStorageService) {}
 
-  set user(value: User | undefined) {
+  set user(value: User) {
+    this.sessionStorage.setItem('user', value);
     this._user.next(value);
   }
 
-  get user$(): Observable<User | undefined> {
+  get user$(): Observable<User> {
     return this._user.asObservable();
   }
 

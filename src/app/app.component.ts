@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '@core/auth/auth.service';
-
+import { AuthService } from './services/app/auth.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -12,6 +11,6 @@ export class AppComponent implements OnInit {
   constructor(private _authService: AuthService) {}
 
   ngOnInit() {
-    this._authService.check();
+    this._authService.validateAuthentication();
   }
 }
