@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ResponseData } from '@core/models';
 import { BaseService } from '@core/services/base.service';
-import { Login } from '@core/models/login.model';
+import { Login } from 'src/app/models/login.model';
 
 @Injectable({ providedIn: 'root' })
 export class LoginService extends BaseService<Login> {

@@ -7,5 +7,6 @@ export interface User {
   email: string;
   roles: string[];
   createdAt: string;
-  selectedJobs: SelectedJob[];
+  status: boolean;
+  selectedJobs?: SelectedJob[];
 }
