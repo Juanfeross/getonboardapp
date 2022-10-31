@@ -45,7 +45,11 @@
         </a>
       </li>
 
-      <li class="button-list__item" *ngIf="isAuthenticated$ | async">
+      <li
+        class="button-list__item"
+        matTooltip="Cerrar sessión de usuario"
+        *ngIf="isAuthenticated$ | async"
+      >
         <a (click)="logout()" class="boton">
           <img
             class="sign-up-button button"
