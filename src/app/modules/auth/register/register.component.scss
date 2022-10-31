@@ -8,6 +8,7 @@
   gap: 10px;
   justify-content: end;
   &__input {
+    margin-bottom: 20px;
     width: 100%;
     @extend %input-custom;
     border: 1px solid $c3;

@@ -1,6 +1,10 @@
 <h1 mat-dialog-title>Cree una cuenta nueva</h1>
 <div mat-dialog-content>
-  <form [formGroup]="registerForm" #registerNgForm="ngForm">
+  <form
+    [formGroup]="registerForm"
+    #registerNgForm="ngForm"
+    (keyup.enter)="register()"
+  >
     <label for="name"><b>Nombre</b></label>
     <input
       class="form__input"

@@ -17,7 +17,11 @@
       </li>
     </ul>
     <ul class="button-list">
-      <li class="button-list__item" *ngIf="!(isAuthenticated$ | async)">
+      <li
+        class="button-list__item"
+        matTooltip="Ingrese al sistema"
+        *ngIf="!(isAuthenticated$ | async)"
+      >
         <a (click)="showLoginDialog()" class="boton">
           <img
             class="sign-in-button button"
@@ -27,7 +31,11 @@
         </a>
       </li>
 
-      <li class="button-list__item" *ngIf="!(isAuthenticated$ | async)">
+      <li
+        class="button-list__item"
+        matTooltip="Registre un usuario"
+        *ngIf="!(isAuthenticated$ | async)"
+      >
         <a (click)="showRegisterDialog()" class="boton">
           <img
             class="sign-up-button button"
