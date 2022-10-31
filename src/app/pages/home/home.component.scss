@@ -1,200 +1,103 @@
 @import "abstracts/colors/colors.scss";
+@import "abstracts/mixins/mixin.scss";
+@import "abstracts/responsive/mediaqueries.scss";
 
 .container {
   display: block;
-}
-
-.search-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  height: 10rem;
-}
-
-.title {
-  padding: 2rem;
-  font-size: 4rem;
-  text-align: center;
-  line-height: 4rem;
-  letter-spacing: -5px;
-  color: $c8;
-  font-family: Comfortaa, Arial, Helvetica, sans-serif;
-}
-
-.subtitle {
-  padding: 5rem;
-  font-size: 4rem;
-  text-align: center;
-  line-height: 4rem;
-  letter-spacing: -5px;
-  color: $c8;
-  font-family: Comfortaa, Arial, Helvetica, sans-serif;
-}
-
-.search-bar {
-  height: 5rem;
-  font-size: 2rem;
-  border-radius: 10rem;
-  border: solid 0.2rem;
-  padding-left: 1.5rem;
-  background: rgba(255, 255, 255, 0.575);
-  color: black;
-}
-
-.work-search {
-  width: 6rem;
-}
-
-.filter-list-jobs {
-  margin-top: 25px;
-}
-
-@media (min-width: 400px) {
-  .container {
-    display: block;
-  }
-
-  .search-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    height: 10rem;
-  }
-
-  .title {
-    padding: 2rem;
-    font-size: 5rem;
+  &__title{
+    margin-top: 5rem;
     text-align: center;
-    line-height: 5rem;
+    font-size: 6rem;
+    line-height: 6rem;
     letter-spacing: -5px;
     color: $c8;
     font-family: Comfortaa, Arial, Helvetica, sans-serif;
-  }
 
-  .subtitle {
+    @include brp_min(530){
+      padding: 2rem;
+    font-size: 6rem;
+    text-align: center;
+    line-height: 6rem;
+    letter-spacing: -5px;
+    color: $c8;
+    font-family: Comfortaa, Arial, Helvetica, sans-serif;
+    }
+
+    @include brp_min(650)
+    {
+      padding-top: 5rem;
+    font-size: 8rem;
+    text-align: center;
+    line-height: 8rem;
+    letter-spacing: -5px;
+    color: $c8;
+    font-family: Comfortaa, Arial, Helvetica, sans-serif;
+    }
+
+    @include brp_min(1200)
+    {
+      padding-top: 5rem;
+      font-size: 9rem;
+      text-align: center;
+      line-height: 8rem;
+      letter-spacing: -5px;
+      color: $c8;
+      font-family: Comfortaa, Arial, Helvetica, sans-serif;
+    }
+
+  }
+  &__subtitle{
     padding: 5rem;
-    font-size: 5rem;
+    font-size: 2rem;
     text-align: center;
-    line-height: 5rem;
-    letter-spacing: -5px;
+    line-height: 2rem;
+    letter-spacing: 1px;
     color: $c8;
     font-family: Comfortaa, Arial, Helvetica, sans-serif;
-  }
 
-  .search-bar {
-    height: 7rem;
+    @include brp_min(530)
+    {
+      padding: 5rem;
     font-size: 3rem;
-    border-radius: 10rem;
-    border: solid 0.2rem;
-    padding-left: 1.5rem;
-    background: rgba(255, 255, 255, 0.575);
-    color: black;
+    text-align: center;
+    line-height: 3rem;
+    letter-spacing: .3rem;
+    color: $c8;
+    font-family: Comfortaa, Arial, Helvetica, sans-serif;
+    }
+
+    @include brp_min(650)
+    {
+      padding-top: 5rem;
+    font-size: 4rem;
+    text-align: center;
+    line-height: 4rem;
+    letter-spacing: .5rem;
+    color: $c8;
+    font-family: Comfortaa, Arial, Helvetica, sans-serif;
+    }
+
+    @include brp_min(1200)
+    {
+      padding-top: 5rem;
+      font-size: 5rem;
+      text-align: center;
+      line-height: 5rem;
+      letter-spacing: 0.7rem;
+      color: $c8;
+      font-family: Comfortaa, Arial, Helvetica, sans-serif;
+    }
   }
 
-  .work-search {
-    width: 7rem;
-  }
-}
-
-@media (min-width: 600px) {
-  .container {
+  @include brp (530)
+  {
     display: block;
   }
 
-  .filtercontainer {
-    padding-top: 5rem;
-  }
-
-  .search-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 10rem;
-  }
-
-  .title {
-    padding-top: 5rem;
-    font-size: 12rem;
-    text-align: center;
-    line-height: 12rem;
-    letter-spacing: -5px;
-    color: $c8;
-    font-family: Comfortaa, Arial, Helvetica, sans-serif;
-  }
-
-  .subtitle {
-    padding-top: 5rem;
-    font-size: 5rem;
-    text-align: center;
-    line-height: 5rem;
-    letter-spacing: -5px;
-    color: $c8;
-    font-family: Comfortaa, Arial, Helvetica, sans-serif;
-  }
-
-  .search-bar {
-    height: 7rem;
-    font-size: 3rem;
-    border-radius: 10rem;
-    border: solid 0.2rem;
-    padding-left: 1.5rem;
-    background: rgba(255, 255, 255, 0.575);
-    color: black;
-  }
-
-  .work-search {
-    width: 7rem;
-  }
 }
 
-@media (min-width: 900px) {
-  .container {
-    display: block;
-  }
 
-  .search-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 10rem;
-  }
 
-  .title {
-    padding-top: 5rem;
-    font-size: 15rem;
-    text-align: center;
-    line-height: 15rem;
-    letter-spacing: -5px;
-    color: $c8;
-    font-family: Comfortaa, Arial, Helvetica, sans-serif;
-  }
-
-  .subtitle {
-    padding-top: 5rem;
-    font-size: 5rem;
-    text-align: center;
-    line-height: 5rem;
-    letter-spacing: -5px;
-    color: $c8;
-    font-family: Comfortaa, Arial, Helvetica, sans-serif;
-  }
-
-  .search-bar {
-    height: 7rem;
-    font-size: 3rem;
-    border-radius: 10rem;
-    border: solid 0.2rem;
-    padding-left: 1.5rem;
-    background: rgba(255, 255, 255, 0.575);
-    color: black;
-  }
-
-  .work-search {
-    width: 7rem;
-  }
-}
 
 @font-face {
   font-family: Comfortaa;
