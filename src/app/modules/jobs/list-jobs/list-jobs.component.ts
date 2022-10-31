@@ -30,8 +30,8 @@ export class ListJobsComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.getListJobs(1);
     this.getUser();
+    this.getListJobs(1);
   }
 
   ngOnDestroy(): void {
@@ -40,7 +40,7 @@ export class ListJobsComponent implements OnInit, OnDestroy {
   }
 
   private getUser() {
-    this._userService.user$.pipe(takeUntil(this.onDestroy$)).subscribe((x) => {
+    this._userService.user$.subscribe((x) => {
       console.log(x);
       this.user = x;
     });

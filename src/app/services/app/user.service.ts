@@ -16,7 +16,7 @@ export class UserService {
   constructor(private sessionStorage: SessionStorageService) {}
 
   set user(value: User) {
-    this.sessionStorage.setItem('user', value);
+    this.sessionStorage.stringifyItem('user', value);
     this._user.next(value);
   }
 
@@ -25,7 +25,7 @@ export class UserService {
   }
 
   public setUser(user: User) {
-    this.sessionStorage.setItem('user', user);
+    this.sessionStorage.stringifyItem('user', user);
     this._user.next(user);
   }
 
