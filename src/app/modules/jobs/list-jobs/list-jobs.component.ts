@@ -43,7 +43,6 @@ export class ListJobsComponent implements OnInit, OnDestroy {
     private userApiService: UserApiService,
     private jobService: JobService,
     private matDialog: MatDialog,
-    private selectedJobService: SelectedJobService,
     private userAppService: UserAppService,
     private confirmationService: ConfirmationService
   ) {}

@@ -27,7 +27,6 @@ export class JobsService extends BaseService<Job> {
       query = `${query}&per_page=${meta.per_page}`;
     }
     query = query === '?' ? '' : query;
-console.log(query);
 
     // let query2: string = `?query=${data}&per_page=${meta.per_page}&page=${meta.page}`;
     return this.get(`/search/jobs${query}`);
