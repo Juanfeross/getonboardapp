@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Meta, SearchingEntity } from '@core/models';
 import { BehaviorSubject } from 'rxjs';
+import { SelectedJobRequest } from 'src/app/models/selected-job-request.model';
 import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/api/user.service';
 
@@ -20,5 +21,15 @@ export class FavoritesService {
 
   getFavorites(user: User) {
     return this.userService.jobs(`/user/${user.id}/job`);
+  }
+
+  removeFromFavorites(user: User, favoriteId: string) {
+    const selectedJob: SelectedJobRequest = {
+      id: user.id,
+      selectedJobs: [
+        { jobId: favoriteId }
+      ]
+    };
+    return this.userService.removeJob(`/user/${user.id}/removejob`, selectedJob);
   }
 }

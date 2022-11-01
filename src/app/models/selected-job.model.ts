@@ -1,4 +1,4 @@
 export interface SelectedJob {
-  id: number;
+  id?: number;
   jobId: string;
 }

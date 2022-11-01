@@ -19,8 +19,6 @@ export class ListFavoritesComponent implements OnInit {
   ngOnInit(): void {
     this.userAppService.user$.subscribe((user) => {
       if (!!user.id) {
-        console.log(user);
-        
         this.user = user;
         this.getListJobs(user);
       }
@@ -37,6 +35,15 @@ export class ListFavoritesComponent implements OnInit {
         })
       }
     })
+  }
+
+  public removeFromFavorites(jobId: string) {
+    this.service.removeFromFavorites(this.user, jobId).subscribe({
+      next: resp => {
+        const indx = this.jobs.findIndex(pred => pred === jobId);
+        this.jobs.splice(indx, 1);
+      }
+    });
   }
 
 }
