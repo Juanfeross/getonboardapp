@@ -46,7 +46,6 @@ export class JobDetailsComponent implements OnInit {
         filter((user) => !!user.id)
       )
       .subscribe((user) => {
-        console.log(user);
         this.user = user;
       });
   }

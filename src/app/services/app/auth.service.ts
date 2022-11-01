@@ -36,6 +36,10 @@ export class AuthService {
     this._authenticated$.next(isAuthenticated);
   }
 
+  public getCurrentUser() {
+    return this.sessionStorage.getItemJSON('user') as User;
+  }
+
   public signOut() {
     this.userService.user = <User>{};
     this.userService.selectedJobs = [];

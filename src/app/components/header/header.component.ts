@@ -14,6 +14,7 @@ import { AuthService } from 'src/app/services/app/auth.service';
 })
 export class HeaderComponent implements OnInit {
   isAuthenticated$: Observable<boolean> | undefined;
+  userName: string = '';
 
   constructor(
     private _router: Router,
@@ -23,6 +24,12 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     this.isAuthenticated$ = this._authService.authenticated$;
+    this.isAuthenticated$.subscribe({
+      next: resp => {
+        const user = this._authService.getCurrentUser();
+        this.userName = `${user.name} ${user.lastName}`;
+      }
+    })
   }
 
   showLoginDialog() {
@@ -35,8 +42,6 @@ export class HeaderComponent implements OnInit {
       if (!response) {
         return;
       }
-
-      console.log(response);
     });
   }
 
@@ -50,8 +55,6 @@ export class HeaderComponent implements OnInit {
       if (!response) {
         return;
       }
-
-      console.log(response);
     });
   }
 

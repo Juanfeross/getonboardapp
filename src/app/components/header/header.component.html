@@ -58,12 +58,12 @@
       </li>
 
       <li
-        class="button-list__item"
-        matTooltip="Cerrar sessión de usuario"
+        class="user-list button-list__item"
         *ngIf="isAuthenticated$ | async"
       >
+        <span class="username-field">{{userName}}</span>
         <a (click)="logout()" class="boton">
-          <mat-icon class="sign-up-button">logout</mat-icon>
+          <mat-icon matTooltip="Cerrar sessión de usuario" class="sign-up-button">logout</mat-icon>
           <!-- <img
             class="sign-up-button button"
             src="./../../../assets/images/icons/logout.svg"
