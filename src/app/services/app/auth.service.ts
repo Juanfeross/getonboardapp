@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Login } from '@core/models';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { User } from 'src/app/models/user.model';
 import { JwtService } from './jwt.service';
 import { SessionStorageService } from './session-storage.service';
 import { UserService } from './user.service';
@@ -36,6 +37,8 @@ export class AuthService {
   }
 
   public signOut() {
+    this.userService.user = <User>{};
+    this.userService.selectedJobs = [];
     this.sessionStorage.clear();
     this._authenticated$.next(false);
   }

@@ -12,10 +12,16 @@ import { HeaderComponent } from './components/header/header.component';
 
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { ConfirmationModule } from '@core/confirmation/confirmation.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { JwtModule } from '@auth0/angular-jwt';
 import { environment } from '@environment/environment';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatButtonModule } from '@angular/material/button';
+import { MatListModule } from '@angular/material/list';
 
 export function tokenGetter2() {
   return localStorage.getItem('token');
@@ -31,6 +37,12 @@ export function tokenGetter2() {
     AuthModule,
     MatDialogModule,
     MatTooltipModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatTabsModule,
+    MatButtonModule,
+    MatListModule,
+    MatSidenavModule,
     ConfirmationModule,
     JwtModule.forRoot({
       config: {

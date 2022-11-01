@@ -4,10 +4,11 @@ import { ConfirmationService } from '@core/confirmation/confirmation.service';
 import { ErrorResponse } from '@core/models/error-response.model';
 import { filter, take } from 'rxjs';
 import { Job } from 'src/app/models/job.model';
+import { SelectedJobRequest } from 'src/app/models/selected-job-request.model';
 import { SelectedJob } from 'src/app/models/selected-job.model';
 import { User } from 'src/app/models/user.model';
-import { SelectedJobService } from 'src/app/services/api/selected-job.service';
-import { UserService } from 'src/app/services/app/user.service';
+import { UserService as UserApiService } from 'src/app/services/api/user.service';
+import { UserService as UserAppService } from 'src/app/services/app/user.service';
 
 @Component({
   selector: 'app-job-details',
@@ -21,29 +22,33 @@ export class JobDetailsComponent implements OnInit {
 
   constructor(
     public matDialogRef: MatDialogRef<JobDetailsComponent>,
-    private _confirmationService: ConfirmationService,
-    private _selectedJobService: SelectedJobService,
-    private _userService: UserService,
+    private confirmationService: ConfirmationService,
+    private userAppService: UserAppService,
+    private userApiService: UserApiService,
     @Inject(MAT_DIALOG_DATA) public data: Job
   ) {}
 
   ngOnInit(): void {
-    this._userService.selectedJobs$
+    this.userAppService.selectedJobs$
       .pipe(
         take(1),
         filter((selectedJobs) => selectedJobs.length > 0)
       )
       .subscribe((selectedJobs) => {
-        console.log(selectedJobs);
         this.alreadyAddedToFavorites =
           !!this.evaluateSelectedJobs(selectedJobs);
         this.selectedJobs = selectedJobs;
       });
 
-    this._userService.user$.pipe(take(1)).subscribe((user) => {
-      console.log(user);
-      this.user = user;
-    });
+    this.userAppService.user$
+      .pipe(
+        take(1),
+        filter((user) => !!user.id)
+      )
+      .subscribe((user) => {
+        console.log(user);
+        this.user = user;
+      });
   }
 
   addToFavorites(): void {
@@ -58,26 +63,33 @@ export class JobDetailsComponent implements OnInit {
       this.notifyAlreadyAddedToFavorites();
     } else {
       const selectedJob: SelectedJob = { id: 0, jobId: this.data.id };
-      this._selectedJobService.add(this.user.id, [selectedJob]).subscribe(
-        (response) => {
-          console.log(response);
-          this._userService.selectedJobs = [...this.selectedJobs, selectedJob];
-          this.alreadyAddedToFavorites = true;
-        },
-        (error: ErrorResponse) => {
-          console.error(error);
-          this._confirmationService.open({
-            title: `${error.error} - ${error.statusCode}`,
-            message: error.message,
-            actions: {
-              confirm: {
-                show: true,
-                label: 'Aceptar',
+      const selectedJobRequest: SelectedJobRequest = {
+        id: this.user.id,
+        selectedJobs: [selectedJob],
+      };
+      this.userApiService
+        .addJob(`/user/${this.user.id}/addjob`, selectedJobRequest)
+        .subscribe(
+          (response) => {
+            if (response.data.selectedJobs) {
+              this.userAppService.selectedJobs = response.data.selectedJobs;
+              this.alreadyAddedToFavorites = true;
+            }
+          },
+          (error: ErrorResponse) => {
+            console.error(error);
+            this.confirmationService.open({
+              title: `${error.error} - ${error.statusCode}`,
+              message: error.message,
+              actions: {
+                confirm: {
+                  show: true,
+                  label: 'Aceptar',
+                },
               },
-            },
-          });
-        }
-      );
+            });
+          }
+        );
     }
   }
 
@@ -88,7 +100,7 @@ export class JobDetailsComponent implements OnInit {
   }
 
   private notifyAlreadyAddedToFavorites() {
-    this._confirmationService.open({
+    this.confirmationService.open({
       title: '¡Atención!',
       message:
         'Esta propuesta de trabajo ya se agregó a favoritos previamente.',
@@ -102,7 +114,7 @@ export class JobDetailsComponent implements OnInit {
   }
 
   private notifyLoginRequired() {
-    this._confirmationService.open({
+    this.confirmationService.open({
       title: '¿Tienes un usuario registrado?',
       message:
         '¡Es necesario ingresar con un usuario registrado para poder agregar las propuestas de trabajo a favoritos!',
