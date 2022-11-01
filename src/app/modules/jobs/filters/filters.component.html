@@ -4,12 +4,14 @@
       type="text"
       placeholder="Buscar trabajo..."
       class="form-search__input"
+      formControlName="searchValue"
     />
     <input
       class="form-search__icon"
       type="image"
       src="./../../../assets/images/icons/worksearch-icon.svg"
       alt="Search jobs"
+      (click)="onSearchClick()"
     />
     <!-- <mat-icon class="form-search__icon">mode_edit</mat-icon> -->
   </div>

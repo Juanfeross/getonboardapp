@@ -3,12 +3,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationService } from '@core/confirmation/confirmation.service';
 import { IPagination, Meta } from '@core/models';
 import { UserService } from 'src/app/services/app/user.service';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, Subscription, takeUntil } from 'rxjs';
 import { Job } from 'src/app/models/job.model';
 import { User } from 'src/app/models/user.model';
-import { JobsService } from 'src/app/services/api/jobs.service';
 import { SelectedJobService } from 'src/app/services/api/selected-job.service';
 import { JobDetailsComponent } from '../job-details/job-details.component';
+import { JobService } from '../services';
 
 @Component({
   selector: 'app-list-jobs',
@@ -17,12 +17,14 @@ import { JobDetailsComponent } from '../job-details/job-details.component';
 })
 export class ListJobsComponent implements OnInit, OnDestroy {
   private readonly onDestroy$ = new Subject<boolean>();
+  private subscription!: Subscription;
+  private paginationSub!: Subscription;
 
   public jobs: Job[] = [];
   public pagination?: Meta;
   private user?: User;
   constructor(
-    private jobsService: JobsService,
+    private jobService: JobService,
     private _matDialog: MatDialog,
     private _selectedJobService: SelectedJobService,
     private _userService: UserService,
@@ -31,12 +33,30 @@ export class ListJobsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getUser();
-    this.getListJobs(1);
+    this.jobService.findJobs('');
+
+    this.subscription = this.jobService.getSearchingSubject().subscribe({
+      next: (result) => {
+        if (result.searching) {
+          // this.spinner.show();
+        } else {
+          // this.spinner.hide();
+          this.jobs = result.entityList;
+        }
+      }
+    });
+    
+    this.paginationSub = this.jobService.getPaginationSubject().subscribe({
+      next: (result) => {
+        this.pagination = result;
+      }
+    });
   }
 
   ngOnDestroy(): void {
     this.onDestroy$.next(true);
     this.onDestroy$.complete();
+    this.subscription.unsubscribe();
   }
 
   private getUser() {
@@ -47,13 +67,13 @@ export class ListJobsComponent implements OnInit, OnDestroy {
   }
 
   public getListJobs(page: number) {
-    this.jobsService
-      .search()
-      .pipe(takeUntil(this.onDestroy$))
-      .subscribe((x) => {
-        this.jobs = x.data;
-        this.pagination = x.meta;
-      });
+    this.jobService.pageChange(page);
+    // this.jobService.search('', { page: page, per_page: 12 })
+    //   .pipe(takeUntil(this.onDestroy$))
+    //   .subscribe((x) => {
+    //     this.jobs = x.data;
+    //     this.pagination = x.meta;
+    //   });
   }
 
   public showJobDetailsDialog(job: Job) {
