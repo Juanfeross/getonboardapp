@@ -6,8 +6,7 @@
   display: block;
 
   &__image{
-    width: 350px;
-    height: 300px;
+    max-width: 80%;
     display:block;
     margin:auto;
     border-radius: 10px;
@@ -23,7 +22,7 @@
     font-family: Comfortaa, Arial, Helvetica, sans-serif;
 
     @include brp_min(530){
-      padding: 2rem;
+    padding: 2rem;
     font-size: 6rem;
     text-align: center;
     line-height: 6rem;
@@ -34,7 +33,7 @@
 
     @include brp_min(650)
     {
-      padding-top: 5rem;
+    padding-top: 5rem;
     font-size: 8rem;
     text-align: center;
     line-height: 8rem;
