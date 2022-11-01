@@ -8,7 +8,11 @@ import { JobsService as JobsApiService } from 'src/app/services/api';
 export class JobService {
   private searchingSubject$: BehaviorSubject<SearchingEntity<Job>> = 
         new BehaviorSubject<SearchingEntity<Job>>(new SearchingEntity<Job>());
-  public pagination?: Meta;
+  public pagination: Meta = {
+    page: 1,
+    per_page: 12,
+    total_pages: 0,
+  };
   private paginationSubject$: BehaviorSubject<Meta> = new BehaviorSubject<Meta>(this.pagination!);
   private searchedString: string = '';
 
@@ -22,11 +26,16 @@ export class JobService {
     return this.paginationSubject$;
   }
   
-  public findJobs(query: string): void {
+  public findJobs(query: string, page?: number): void {
     this.searchedString = query;
     this.searchingSubject$.next(new SearchingEntity<Job>().init());
     
-    this.backend.search(query, { page: this.pagination?.page!, per_page: 12 }).subscribe({
+    let thePage: number = page!;
+    if (!page) {
+      thePage = this.pagination?.page!
+    }
+
+    this.backend.search(query, { page: thePage, per_page: 12 }).subscribe({
       next: (response) => {
         this.pagination = response.meta;
         this.paginationSubject$.next(this.pagination);

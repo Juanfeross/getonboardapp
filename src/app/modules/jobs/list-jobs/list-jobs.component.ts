@@ -21,7 +21,11 @@ export class ListJobsComponent implements OnInit, OnDestroy {
   private paginationSub!: Subscription;
 
   public jobs: Job[] = [];
-  public pagination?: Meta;
+  public pagination: Meta = {
+    page: 1,
+    per_page: 12,
+    total_pages: 0,
+  }
   private user?: User;
   constructor(
     private jobService: JobService,
@@ -48,7 +52,10 @@ export class ListJobsComponent implements OnInit, OnDestroy {
     
     this.paginationSub = this.jobService.getPaginationSubject().subscribe({
       next: (result) => {
+        console.log(result);
+        
         this.pagination = result;
+        console.log(this.pagination);
       }
     });
   }

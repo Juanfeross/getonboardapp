@@ -41,7 +41,7 @@ export class FiltersComponent implements OnInit, OnDestroy {
   }
 
   onSearchClick() {
-    this.jobService.findJobs(this.filtersFrom.get('searchValue')!.value!);
+    this.jobService.findJobs(this.filtersFrom.get('searchValue')!.value!, 1);
   }
 
   private getDataFilters() {
