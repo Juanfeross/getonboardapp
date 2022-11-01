@@ -33,11 +33,12 @@
         *ngIf="!(isAuthenticated$ | async)"
       >
         <a (click)="showLoginDialog()" class="boton">
-          <img
+          <mat-icon class="sign-in-button">person</mat-icon>
+          <!-- <img
             class="sign-in-button button"
             src="./../../../assets/images/icons/sign-in.svg"
             alt="Inicio de Sesión"
-          />
+          /> -->
         </a>
       </li>
 
@@ -47,11 +48,12 @@
         *ngIf="!(isAuthenticated$ | async)"
       >
         <a (click)="showRegisterDialog()" class="boton">
-          <img
+          <mat-icon class="sign-up-button">person_add</mat-icon>
+          <!-- <img
             class="sign-up-button button"
             src="./../../../assets/images/icons/sign-up.svg"
             alt="Registro"
-          />
+          /> -->
         </a>
       </li>
 
@@ -61,11 +63,12 @@
         *ngIf="isAuthenticated$ | async"
       >
         <a (click)="logout()" class="boton">
-          <img
+          <mat-icon class="sign-up-button">logout</mat-icon>
+          <!-- <img
             class="sign-up-button button"
-            src="./../../../assets/images/icons/sign-in.svg"
+            src="./../../../assets/images/icons/logout.svg"
             alt="Salir del sistema"
-          />
+          /> -->
         </a>
       </li>
     </ul>
