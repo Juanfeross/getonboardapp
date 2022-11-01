@@ -15,7 +15,6 @@ import { Job } from 'src/app/models/job.model';
 import { SelectedJobRequest } from 'src/app/models/selected-job-request.model';
 import { SelectedJob } from 'src/app/models/selected-job.model';
 import { User } from 'src/app/models/user.model';
-import { SelectedJobService } from 'src/app/services/api/selected-job.service';
 import { UserService as UserApiService } from 'src/app/services/api/user.service';
 import { UserService as UserAppService } from 'src/app/services/app/user.service';
 import { JobDetailsComponent } from '../job-details/job-details.component';
