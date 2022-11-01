@@ -1,35 +1,42 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { LoginComponent } from 'src/app/modules/auth/login/login.component';
 import { RegisterComponent } from 'src/app/modules/auth/register/register.component';
 import { AuthService } from 'src/app/services/app/auth.service';
+import { UserService } from 'src/app/services/app/user.service';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
   isAuthenticated$: Observable<boolean> | undefined;
+  private subscription!: Subscription;
   userName: string = '';
 
   constructor(
     private _router: Router,
     private _matDialog: MatDialog,
-    private _authService: AuthService
+    private _authService: AuthService,
+    private _userService: UserService
   ) {}
 
   ngOnInit() {
     this.isAuthenticated$ = this._authService.authenticated$;
-    this.isAuthenticated$.subscribe({
+    this.subscription = this._userService.user$.subscribe({
       next: resp => {
-        const user = this._authService.getCurrentUser();
+        const user = resp;
         this.userName = `${user.name} ${user.lastName}`;
       }
-    })
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
   showLoginDialog() {

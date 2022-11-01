@@ -19,6 +19,7 @@ export class JobService {
   private searchedString: string = '';
   private selectedCategory: Category | undefined;
   private selectedCompany: Company | undefined;
+  private itemsPerPage: number = 30;
 
   constructor(private backend: JobsApiService) { }
 
@@ -41,7 +42,7 @@ export class JobService {
       thePage = this.pagination?.page!
     }
 
-    this.backend.search(query, { page: thePage, per_page: 12 }).subscribe({
+    this.backend.search(query, { page: thePage, per_page: this.itemsPerPage }).subscribe({
       next: (response) => {
         this.pagination = response.meta;
         this.paginationSubject$.next(this.pagination);
@@ -64,7 +65,7 @@ export class JobService {
       thePage = this.pagination?.page!
     }
 
-    this.backend.searchByCategory(category.id, { page: thePage, per_page: 12 }).subscribe({
+    this.backend.searchByCategory(category.id, { page: thePage, per_page: this.itemsPerPage }).subscribe({
       next: (response) => {
         this.pagination = response.meta;
         this.paginationSubject$.next(this.pagination);
@@ -87,7 +88,7 @@ export class JobService {
       thePage = this.pagination?.page!
     }
 
-    this.backend.searchByCompany(company.id, { page: thePage, per_page: 12 }).subscribe({
+    this.backend.searchByCompany(company.id, { page: thePage, per_page: this.itemsPerPage }).subscribe({
       next: (response) => {
         this.pagination = response.meta;
         this.paginationSubject$.next(this.pagination);

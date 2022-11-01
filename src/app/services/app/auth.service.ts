@@ -10,8 +10,7 @@ import { UserService } from './user.service';
   providedIn: 'root',
 })
 export class AuthService {
-  private _authenticated$: BehaviorSubject<boolean> =
-    new BehaviorSubject<boolean>(false);
+  private _authenticated$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   constructor(
     private sessionStorage: SessionStorageService,
