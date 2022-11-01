@@ -52,10 +52,10 @@ export class ListJobsComponent implements OnInit, OnDestroy {
     
     this.paginationSub = this.jobService.getPaginationSubject().subscribe({
       next: (result) => {
-        console.log(result);
+        // console.log(result);
         
         this.pagination = result;
-        console.log(this.pagination);
+        // console.log(this.pagination);
       }
     });
   }
@@ -68,7 +68,7 @@ export class ListJobsComponent implements OnInit, OnDestroy {
 
   private getUser() {
     this._userService.user$.subscribe((x) => {
-      console.log(x);
+      // console.log(x);
       this.user = x;
     });
   }
@@ -97,18 +97,18 @@ export class ListJobsComponent implements OnInit, OnDestroy {
         if (!response) {
           return;
         }
-        console.log(response);
+        // console.log(response);
       });
   }
 
   public addJobToUser(job: Job) {
-    console.log(job, this.user);
+    // console.log(job, this.user);
     if (this.user) {
       this._selectedJobService
         .add(this.user.id, [{ id: 0, jobId: job.id }])
         .pipe(takeUntil(this.onDestroy$))
         .subscribe((x) => {
-          console.log(x);
+          // console.log(x);
         });
     } else {
       this.notifyLoginRequired();
