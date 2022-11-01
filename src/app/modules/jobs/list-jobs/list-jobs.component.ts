@@ -3,14 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationService } from '@core/confirmation/confirmation.service';
 import { Meta } from '@core/models';
 import { SearchingEntity } from '@core/models/searching-entity.model';
-import {
-  combineLatest,
-  filter,
-  Observable,
-  Subject,
-  take,
-  takeUntil,
-} from 'rxjs';
+import { combineLatest, Observable, Subject, takeUntil } from 'rxjs';
 import { Job } from 'src/app/models/job.model';
 import { SelectedJobRequest } from 'src/app/models/selected-job-request.model';
 import { SelectedJob } from 'src/app/models/selected-job.model';

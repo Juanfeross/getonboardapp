@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Meta } from '@core/models';
 import { FavoritesService } from '../services/favorites.service';
 import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/app/user.service';
+import { JobsService } from 'src/app/services/api';
+import { MatDialog } from '@angular/material/dialog';
+import { JobDetailsComponent } from '../../jobs/job-details/job-details.component';
+import { Job } from 'src/app/models/job.model';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-list-favorites',
@@ -10,11 +14,14 @@ import { UserService } from 'src/app/services/app/user.service';
   styleUrls: ['./list-favorites.component.scss']
 })
 export class ListFavoritesComponent implements OnInit {
+  private readonly onDestroy$ = new Subject<boolean>();
   user!: User;
-  public jobs: string[] = [];
+  public jobs: IJob[] = [];
 
   constructor(private service: FavoritesService,
-    private userAppService: UserService) { }
+    private userAppService: UserService,
+    private jobsService: JobsService,
+    private matDialog: MatDialog) { }
 
   ngOnInit(): void {
     this.userAppService.user$.subscribe((user) => {
@@ -31,19 +38,47 @@ export class ListFavoritesComponent implements OnInit {
     this.service.getFavorites(user).subscribe({
       next: resp => {
         resp.data.selectedJobs?.forEach(job => {
-          this.jobs.push(job.jobId);
+          const jobObj = this.jobsService.getJobById(job.jobId);
+          const newJob: IJob = {
+            id: job.jobId,
+            title: jobObj?.attributes.title ?? job.jobId
+          }
+          this.jobs.push(newJob);
         })
       }
     })
   }
 
-  public removeFromFavorites(jobId: string) {
-    this.service.removeFromFavorites(this.user, jobId).subscribe({
+  public removeFromFavorites(job: IJob) {
+    this.service.removeFromFavorites(this.user, job.id).subscribe({
       next: resp => {
-        const indx = this.jobs.findIndex(pred => pred === jobId);
+        const indx = this.jobs.findIndex(pred => pred.id === job.id);
         this.jobs.splice(indx, 1);
       }
     });
   }
 
+  public showJobDetailsDialog(job: IJob) {
+    const jobObj = this.jobsService.getJobById(job.id);
+    const dialogRef = this.matDialog.open(JobDetailsComponent, {
+      data: jobObj,
+      width: '700px',
+      height: 'auto',
+    });
+
+    dialogRef
+      .afterClosed()
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe((response) => {
+        if (!response) {
+          return;
+        }
+      });
+  }
+
+}
+
+interface IJob {
+  id: string,
+  title: string
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { JobsService } from './services/api';
 import { AuthService } from './services/app/auth.service';
 @Component({
   selector: 'app-root',
@@ -8,9 +9,11 @@ import { AuthService } from './services/app/auth.service';
 export class AppComponent implements OnInit {
   title = 'getonboardapp';
 
-  constructor(private _authService: AuthService) {}
+  constructor(private _authService: AuthService,
+    private _service: JobsService) {}
 
   ngOnInit() {
     this._authService.validateAuthentication();
+    this._service.getForBulk();
   }
 }

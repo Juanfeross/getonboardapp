@@ -7,6 +7,7 @@ import { Job } from 'src/app/models/job.model';
 
 @Injectable({ providedIn: 'root' })
 export class JobsService extends BaseService<Job> {
+  bulkJobs: Job[] = [];
   constructor(protected override http: HttpClient) {
     super(http, environment.getonbrdApiBaseUrl);
   }
@@ -30,6 +31,23 @@ export class JobsService extends BaseService<Job> {
 
     // let query2: string = `?query=${data}&per_page=${meta.per_page}&page=${meta.page}`;
     return this.get(`/search/jobs${query}`);
+  }
+
+  public getForBulk() {
+    // El api no permite cargar un job por id, por lo que genero un bulk para emular.
+    let query: string = '?query';
+    query = `${query}&page=1`;
+    query = `${query}&per_page=100`;
+    query = query === '?' ? '' : query;
+    this.get(`/search/jobs${query}`).subscribe({
+      next: resp => {
+        this.bulkJobs = resp.data;
+      }
+    })
+  }
+
+  public getJobById(jobId: string) {
+    return this.bulkJobs.find(job => job.id === jobId);
   }
 
   public searchByCategory(

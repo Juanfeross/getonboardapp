@@ -5,7 +5,7 @@
   </p>
   <div class="job" *ngFor="let job of jobs; let i = index">
     <p class="job__title">
-      {{ job }}
+      {{ job.title }}
     </p>
     <div class="job-actions">
       <button
@@ -15,12 +15,13 @@
       >
         <mat-icon>remove_circle_outline</mat-icon>
       </button>
-      <!-- <button
+      <button
         mat-icon-button
-        title="See more"
+        title="Ver mas"
+        (click)="showJobDetailsDialog(job)"
       >
         <mat-icon>visibility</mat-icon>
-      </button> -->
+      </button>
     </div>
   </div>
 </div>
