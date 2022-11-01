@@ -59,4 +59,6 @@ export class HeaderComponent implements OnInit {
     this._router.navigate(['']);
     this._authService.signOut();
   }
+
+  public onToggleSidenav = () => {}
 }

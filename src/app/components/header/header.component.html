@@ -1,4 +1,9 @@
 <header class="header">
+  <input class="side-menu" type="checkbox" id="side-menu"/>
+  <label class="hamb" for="side-menu">
+    <span class="hamb-line"></span>
+  </label>
+
   <nav class="nav">
     <a routerLink="/" class="list-options-link">
       <h1 class="list-options-link__title">getonboard</h1>
@@ -65,4 +70,74 @@
       </li>
     </ul>
   </nav>
+
 </header>
+
+<!-- <header class="header">
+  <nav class="nav">
+    <a routerLink="/" class="list-options-link">
+      <h1 class="list-options-link__title">getonboard</h1>
+    </a>
+    <ul class="list">
+      <li class="list__item">
+        <a [routerLink]="['/']" routerLinkActive="router-link-active">Inicio</a>
+      </li>
+      <li class="list__item">
+        <a [routerLink]="['/jobs']" routerLinkActive="router-link-active"
+          >Trabajos</a
+        >
+      </li>
+      <li class="list__item">
+        <a
+          [routerLink]="['/favorites']"
+          routerLinkActive="router-link-active"
+          *ngIf="isAuthenticated$ | async"
+          >Favoritos</a
+        >
+      </li>
+    </ul>
+    <ul class="button-list">
+      <li
+        class="button-list__item"
+        matTooltip="Ingrese al sistema"
+        *ngIf="!(isAuthenticated$ | async)"
+      >
+        <a (click)="showLoginDialog()" class="boton">
+          <img
+            class="sign-in-button button"
+            src="./../../../assets/images/icons/sign-in.svg"
+            alt="Inicio de Sesión"
+          />
+        </a>
+      </li>
+
+      <li
+        class="button-list__item"
+        matTooltip="Registre un usuario"
+        *ngIf="!(isAuthenticated$ | async)"
+      >
+        <a (click)="showRegisterDialog()" class="boton">
+          <img
+            class="sign-up-button button"
+            src="./../../../assets/images/icons/sign-up.svg"
+            alt="Registro"
+          />
+        </a>
+      </li>
+
+      <li
+        class="button-list__item"
+        matTooltip="Cerrar sessión de usuario"
+        *ngIf="isAuthenticated$ | async"
+      >
+        <a (click)="logout()" class="boton">
+          <img
+            class="sign-up-button button"
+            src="./../../../assets/images/icons/sign-in.svg"
+            alt="Salir del sistema"
+          />
+        </a>
+      </li>
+    </ul>
+  </nav>
+</header> -->
