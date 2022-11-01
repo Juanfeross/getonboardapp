@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { forkJoin, map, startWith, Subject, take, takeUntil } from 'rxjs';
+import { catchError, debounceTime, distinctUntilChanged, forkJoin, map, Observable, of, OperatorFunction, startWith, Subject, switchMap, take, takeUntil, tap } from 'rxjs';
 import { Category } from 'src/app/models/category.model';
 import { Company } from 'src/app/models/company.model';
 import { CategoryService } from 'src/app/services/api/category.service';
@@ -23,6 +23,10 @@ export class FiltersComponent implements OnInit, OnDestroy {
   public tempCategories: Category[] = [];
   public tempCompanies: Company[] = [];
   private onDestroy$ = new Subject<boolean>();
+  inputFormatter = (entity: Category) => entity ? entity.attributes.name : '';
+  inputCompFormatter = (entity: Company) => entity ? entity.attributes.name : '';
+  searching = false;
+	searchFailed = false;
 
   constructor(
     private jobService: JobService,
@@ -41,7 +45,17 @@ export class FiltersComponent implements OnInit, OnDestroy {
   }
 
   onSearchClick() {
+    this.filtersFrom.get('category')?.setValue('');
+    this.filtersFrom.get('company')?.setValue('');
     this.jobService.findJobs(this.filtersFrom.get('searchValue')!.value!, 1);
+  }
+
+  onSelectCategory() {
+    this.jobService.findJobsByCategory(this.filtersFrom.get('category')!.value as any as Category);
+  }
+
+  onSelectCompany() {
+    this.jobService.findJobsByCompany(this.filtersFrom.get('company')!.value as any as Company);
   }
 
   private getDataFilters() {
@@ -54,6 +68,7 @@ export class FiltersComponent implements OnInit, OnDestroy {
       this.tempCategories = category.data;
       this.companies = company.data;
       this.tempCompanies = company.data;
+      this.filtersFrom.get('category')!.valueChanges.pipe(startWith(''))
     });
   }
 
@@ -61,17 +76,23 @@ export class FiltersComponent implements OnInit, OnDestroy {
     this.filtersFrom
       .get('category')
       ?.valueChanges.pipe(takeUntil(this.onDestroy$))
-      .subscribe((x) => {
-        this.tempCategories = this.categories.filter((c) =>
-          c.attributes.name.toLowerCase().includes((x ?? '').toLowerCase())
+      .subscribe((entity) => {
+        if ((entity as any).id) {
+          return;
+        }
+        this.tempCategories = this.categories.filter(category =>
+          category.attributes.name.toLowerCase().includes((entity ?? '').toLowerCase())
         );
       });
     this.filtersFrom
       .get('company')
       ?.valueChanges.pipe(takeUntil(this.onDestroy$))
-      .subscribe((x) => {
-        this.tempCompanies = this.companies.filter((c) =>
-          c.attributes.name.toLowerCase().includes((x ?? '').toLowerCase())
+      .subscribe((entity) => {
+        if ((entity as any).id) {
+          return;
+        }
+        this.tempCompanies = this.companies.filter(company =>
+          company.attributes.name.toLowerCase().includes((entity ?? '').toLowerCase())
         );
       });
   }
