@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FavoritesService } from '../services/favorites.service';
 import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/app/user.service';
@@ -6,16 +6,18 @@ import { JobsService } from 'src/app/services/api';
 import { MatDialog } from '@angular/material/dialog';
 import { JobDetailsComponent } from '../../jobs/job-details/job-details.component';
 import { Job } from 'src/app/models/job.model';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, Subscription, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-list-favorites',
   templateUrl: './list-favorites.component.html',
   styleUrls: ['./list-favorites.component.scss']
 })
-export class ListFavoritesComponent implements OnInit {
+export class ListFavoritesComponent implements OnInit, OnDestroy {
   private readonly onDestroy$ = new Subject<boolean>();
-  user!: User;
+  private subscription!: Subscription;
+  private userSubscription!: Subscription;
+  private user!: User;
   public jobs: IJob[] = [];
 
   constructor(private service: FavoritesService,
@@ -24,14 +26,28 @@ export class ListFavoritesComponent implements OnInit {
     private matDialog: MatDialog) { }
 
   ngOnInit(): void {
-    this.userAppService.user$.subscribe((user) => {
+    this.userSubscription = this.userAppService.user$.subscribe((user) => {
       if (!!user.id) {
         this.user = user;
         this.getListJobs(user);
       }
     });
 
-    // this.service.getFavorites();
+    this.subscription = this.jobsService.getBulkLoadSubject$().subscribe({
+      next: resp => {
+        if (resp) {
+          this.jobs.forEach(job => {
+            const jobObj = this.jobsService.getJobById(job.id);
+            job.title = jobObj?.attributes.title ?? job.id;
+          })
+        }
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.userSubscription.unsubscribe();
+    this.subscription.unsubscribe();
   }
 
   public getListJobs(user: User) {

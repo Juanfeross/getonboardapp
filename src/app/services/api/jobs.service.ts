@@ -4,12 +4,19 @@ import { environment } from 'src/environments/environment';
 import { Meta } from '@core/models';
 import { BaseService } from '@core/services/base.service';
 import { Job } from 'src/app/models/job.model';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class JobsService extends BaseService<Job> {
+  private bulkLoadSubject$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   bulkJobs: Job[] = [];
+
   constructor(protected override http: HttpClient) {
     super(http, environment.getonbrdApiBaseUrl);
+  }
+
+  public getBulkLoadSubject$() {
+    return this.bulkLoadSubject$;
   }
 
   public search(
@@ -41,9 +48,99 @@ export class JobsService extends BaseService<Job> {
     query = query === '?' ? '' : query;
     this.get(`/search/jobs${query}`).subscribe({
       next: resp => {
-        this.bulkJobs = resp.data;
+        resp.data.forEach(data => this.bulkJobs.push(data));
+        this.bulkLoadSubject$.next(true);
       }
-    })
+    });
+
+    query = '?query';
+    query = `${query}&page=2`;
+    query = `${query}&per_page=100`;
+    query = query === '?' ? '' : query;
+    this.get(`/search/jobs${query}`).subscribe({
+      next: resp => {
+        resp.data.forEach(data => this.bulkJobs.push(data));
+        this.bulkLoadSubject$.next(true);
+      }
+    });
+
+    query = '?query';
+    query = `${query}&page=3`;
+    query = `${query}&per_page=100`;
+    query = query === '?' ? '' : query;
+    this.get(`/search/jobs${query}`).subscribe({
+      next: resp => {
+        resp.data.forEach(data => this.bulkJobs.push(data));
+        this.bulkLoadSubject$.next(true);
+      }
+    });
+
+    query = '?query';
+    query = `${query}&page=4`;
+    query = `${query}&per_page=100`;
+    query = query === '?' ? '' : query;
+    this.get(`/search/jobs${query}`).subscribe({
+      next: resp => {
+        resp.data.forEach(data => this.bulkJobs.push(data));
+        this.bulkLoadSubject$.next(true);
+      }
+    });
+
+    query = '?query';
+    query = `${query}&page=5`;
+    query = `${query}&per_page=100`;
+    query = query === '?' ? '' : query;
+    this.get(`/search/jobs${query}`).subscribe({
+      next: resp => {
+        resp.data.forEach(data => this.bulkJobs.push(data));
+        this.bulkLoadSubject$.next(true);
+      }
+    });
+
+    query = '?query';
+    query = `${query}&page=6`;
+    query = `${query}&per_page=100`;
+    query = query === '?' ? '' : query;
+    this.get(`/search/jobs${query}`).subscribe({
+      next: resp => {
+        resp.data.forEach(data => this.bulkJobs.push(data));
+        this.bulkLoadSubject$.next(true);
+      }
+    });
+
+    query = '?query';
+    query = `${query}&page=7`;
+    query = `${query}&per_page=100`;
+    query = query === '?' ? '' : query;
+    this.get(`/search/jobs${query}`).subscribe({
+      next: resp => {
+        resp.data.forEach(data => this.bulkJobs.push(data));
+        this.bulkLoadSubject$.next(true);
+      }
+    });
+
+    query = '?query';
+    query = `${query}&page=8`;
+    query = `${query}&per_page=100`;
+    query = query === '?' ? '' : query;
+    this.get(`/search/jobs${query}`).subscribe({
+      next: resp => {
+        resp.data.forEach(data => this.bulkJobs.push(data));
+        this.bulkLoadSubject$.next(true);
+      }
+    });
+
+    query = '?query';
+    query = `${query}&page=9`;
+    query = `${query}&per_page=100`;
+    query = query === '?' ? '' : query;
+    this.get(`/search/jobs${query}`).subscribe({
+      next: resp => {
+        resp.data.forEach(data => this.bulkJobs.push(data));
+        this.bulkLoadSubject$.next(true);
+      }
+    });
+
   }
 
   public getJobById(jobId: string) {
