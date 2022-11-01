@@ -35,4 +35,12 @@ export class UserService extends BaseService<Register> {
     const apiUrl = `${this.apiRoot}${endPoint}`;
     return this.http.put<ResponseData<User>>(apiUrl, object);
   }
+
+  public removeJob(
+    endPoint: string,
+    object: SelectedJobRequest
+  ): Observable<ResponseData<User>> {
+    const apiUrl = `${this.apiRoot}${endPoint}`;
+    return this.http.put<ResponseData<User>>(apiUrl, object);
+  }
 }
