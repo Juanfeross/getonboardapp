@@ -2,7 +2,7 @@
 @import "abstracts/mixins/mixin.scss";
 @import "base/base.scss";
 .container {
-  min-height: calc(100vh - 7rem - 10rem);
+  min-height: calc(100vh - 7rem - 7rem);
   background-image: url(./../assets/images/backgrounds/landbackground.png);
   background-repeat: no-repeat;
   background-attachment: fixed;
