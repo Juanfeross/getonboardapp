@@ -1,13 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationService } from '@core/confirmation/confirmation.service';
-import { IPagination, Meta } from '@core/models';
+import { Meta } from '@core/models';
 import { UserService } from 'src/app/services/app/user.service';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, Subscription, takeUntil } from 'rxjs';
 import { Job } from 'src/app/models/job.model';
 import { User } from 'src/app/models/user.model';
 import { SelectedJobService } from 'src/app/services/api/selected-job.service';
-import { UserService } from 'src/app/services/app/user.service';
 import { JobDetailsComponent } from '../job-details/job-details.component';
 import { JobService } from '../services';
 
