@@ -7,11 +7,8 @@ import { UserService } from 'src/app/services/app/user.service';
   styleUrls: ['./favorite-jobs.component.scss'],
 })
 export class FavoriteJobsComponent implements OnInit {
-  constructor(private _userService: UserService) {}
+  constructor() {}
 
   ngOnInit(): void {
-    this._userService.selectedJobs$.subscribe((f) => {
-      console.log(f);
-    });
   }
 }

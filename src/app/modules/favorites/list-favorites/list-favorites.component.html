@@ -1,0 +1,25 @@
+<div class="list-jobs">
+  <p class="list-jobs__quantity">
+    Cantidad total:
+    {{ (jobs.length) }}
+  </p>
+  <div class="job" *ngFor="let job of jobs; let i = index">
+    <p class="job__title">
+      {{ job }}
+    </p>
+    <div class="job-actions">
+      <button
+        mat-icon-button
+        title="Remove from my favorites"
+      >
+        <mat-icon>remove_circle_outline</mat-icon>
+      </button>
+      <!-- <button
+        mat-icon-button
+        title="See more"
+      >
+        <mat-icon>visibility</mat-icon>
+      </button> -->
+    </div>
+  </div>
+</div>
