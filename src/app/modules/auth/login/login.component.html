@@ -1,6 +1,12 @@
 <h1 mat-dialog-title>Ingrese a su cuenta</h1>
 <div mat-dialog-content>
   <form [formGroup]="loginForm" #loginNgForm="ngForm" (keyup.enter)="login()">
+    <div
+      class="form__error"
+      *ngIf="loginForm.controls['email'].errors?.['email']"
+    >
+      Digite un correo válido.
+    </div>
     <label for="email"><b>Correo</b></label>
     <input
       class="form__input"
@@ -10,6 +16,12 @@
       name="email"
     />
 
+    <div
+      class="form__error"
+      *ngIf="loginForm.controls['password'].errors?.['minlength']"
+    >
+      La contraseña debe tener al menos 8 caracteres.
+    </div>
     <label for="password"><b>Contraseña</b></label>
     <input
       class="form__input"
@@ -26,7 +38,7 @@
     class="form__button"
     type="button"
     (click)="login()"
-    [disabled]="loginForm.invalid"
+    [disabled]="loginForm.invalid || loginForm.disabled"
   >
     Ingresar
   </button>

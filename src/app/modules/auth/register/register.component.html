@@ -23,6 +23,12 @@
       name="lastName"
     />
 
+    <div
+      class="form__error"
+      *ngIf="registerForm.controls['email'].errors?.['email']"
+    >
+      Digite un correo válido.
+    </div>
     <label for="email"><b>Correo</b></label>
     <input
       class="form__input"
@@ -32,6 +38,12 @@
       name="email"
     />
 
+    <div
+      class="form__error"
+      *ngIf="registerForm.controls['password'].errors?.['minlength']"
+    >
+      La contraseña debe tener al menos 8 caracteres.
+    </div>
     <label for="password"><b>Contraseña</b></label>
     <input
       class="form__input"
@@ -48,7 +60,7 @@
     class="form__button"
     type="button"
     (click)="register()"
-    [disabled]="registerForm.invalid"
+    [disabled]="registerForm.invalid || registerForm.disabled"
   >
     Registrar
   </button>

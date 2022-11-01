@@ -19,6 +19,10 @@
     }
   }
 
+  &__error {
+    color: red;
+  }
+
   &__button {
     margin-top: 5px;
     background-color: $c10;
@@ -36,4 +40,8 @@
   background-color: $c5;
   color: $c12;
   cursor: not-allowed;
+}
+
+input.ng-invalid.ng-touched {
+  border: red 1px solid;
 }

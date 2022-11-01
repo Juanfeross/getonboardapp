@@ -7,6 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { LoginService } from 'src/app/services/api/login.service';
 import { AuthService } from 'src/app/services/app/auth.service';
 import { UserService } from 'src/app/services/app/user.service';
@@ -26,6 +27,7 @@ export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     private authService: AuthService,
     private userService: UserService,
+    private snackBar: MatSnackBar,
     @Inject(MAT_DIALOG_DATA) public _data: any
   ) {}
 
@@ -56,10 +58,20 @@ export class LoginComponent implements OnInit {
         }
         this.matDialogRef.close();
       },
-      error: () => {
+      error: (error) => {
+        this.openSnackBar(error.error.message);
         this.loginForm.enable();
         this.loginNgForm.resetForm();
       },
+    });
+  }
+
+  openSnackBar(message: string) {
+    this.snackBar.open(message, undefined, {
+      duration: 5 * 1000,
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
+      panelClass: ['red-snackbar'],
     });
   }
 }
