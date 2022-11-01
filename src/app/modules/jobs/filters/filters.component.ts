@@ -68,7 +68,7 @@ export class FiltersComponent implements OnInit, OnDestroy {
       this.tempCategories = category.data;
       this.companies = company.data;
       this.tempCompanies = company.data;
-      this.filtersFrom.get('category')!.valueChanges.pipe(startWith(''))
+      // this.filtersFrom.get('category')!.valueChanges.pipe(startWith(''))
     });
   }
 
