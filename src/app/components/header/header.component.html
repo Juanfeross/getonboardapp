@@ -13,20 +13,13 @@
     </a>
     <ul class="list">
       <li class="list__item">
-        <a [routerLink]="['/']" routerLinkActive="router-link-active">Inicio</a>
+        <a mat-button [routerLink]="['/']" routerLinkActive="router-link-active">Inicio</a>
       </li>
       <li class="list__item">
-        <a [routerLink]="['/jobs']" routerLinkActive="router-link-active"
-          >Trabajos</a
-        >
+        <a mat-button [routerLink]="['/jobs']" routerLinkActive="router-link-active">Trabajos</a>
       </li>
       <li class="list__item">
-        <a
-          [routerLink]="['/favorites']"
-          routerLinkActive="router-link-active"
-          *ngIf="isAuthenticated$ | async"
-          >Favoritos</a
-        >
+        <a mat-button [routerLink]="['/favorites']" routerLinkActive="router-link-active" *ngIf="isAuthenticated$ | async">Favoritos</a>
       </li>
     </ul>
     <ul class="button-list">
