@@ -24,11 +24,6 @@ export class UserService {
     return this._user.asObservable();
   }
 
-  public setUser(user: User) {
-    this.sessionStorage.stringifyItem('user', user);
-    this._user.next(user);
-  }
-
   set selectedJobs(value: SelectedJob[]) {
     this._selectedJobs.next(value);
   }

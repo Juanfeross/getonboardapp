@@ -7,7 +7,10 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { AuthService } from '@core/auth/auth.service';
+import { LoginService } from 'src/app/services/api/login.service';
+import { UserService as userApiService } from 'src/app/services/api/user.service';
+import { AuthService } from 'src/app/services/app/auth.service';
+import { UserService as userAppService } from 'src/app/services/app/user.service';
 
 @Component({
   selector: 'app-register',
@@ -20,13 +23,16 @@ export class RegisterComponent implements OnInit {
 
   constructor(
     public matDialogRef: MatDialogRef<RegisterComponent>,
-    private _authService: AuthService,
-    private _formBuilder: FormBuilder,
+    private userAppService: userAppService,
+    private userApiService: userApiService,
+    private loginService: LoginService,
+    private authService: AuthService,
+    private formBuilder: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {}
 
   ngOnInit(): void {
-    this.registerForm = this._formBuilder.group({
+    this.registerForm = this.formBuilder.group({
       name: new FormControl<string>('', [Validators.required]),
       lastName: new FormControl<string>('', [Validators.required]),
       email: new FormControl<string>('', [
@@ -35,7 +41,7 @@ export class RegisterComponent implements OnInit {
       ]),
       password: new FormControl<string>('', [
         Validators.required,
-        Validators.minLength(6),
+        Validators.minLength(8),
       ]),
     });
   }
@@ -49,26 +55,29 @@ export class RegisterComponent implements OnInit {
 
     const register = this.registerForm.value;
 
-    this._authService.registerUser(this.registerForm.value).subscribe(
-      (registerResponse) => {
-        console.log(registerResponse);
-
-        // Hay que corregir este subrscription dentro de subscription. Alguna idea?
-        this._authService
-          .loginUser({ email: register.email, password: register.password })
+    this.userApiService.register('/user/register', register).subscribe(
+      () => {
+        this.loginService
+          .login('/auth/login', {
+            email: register.email,
+            password: register.password,
+          })
           .subscribe(
             (LoginResponse) => {
-              console.log(LoginResponse);
+              if (LoginResponse.data && LoginResponse.data.user) {
+                this.authService.authenticate(LoginResponse.data);
+                this.userAppService.user = LoginResponse.data.user;
+              }
               this.matDialogRef.close();
             },
             (error) => {
-              console.log(error);
+              console.error(error);
             }
           );
         this.matDialogRef.close();
       },
       (error) => {
-        console.log(error);
+        console.error(error);
         this.registerForm.enable();
         this.registerNgForm.resetForm();
       }

@@ -1,10 +1,10 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { environment } from 'src/environments/environment';
 import { ResponseData } from '@core/models';
 import { BaseService } from '@core/services/base.service';
+import { Observable } from 'rxjs';
 import { Login } from 'src/app/models/login.model';
+import { environment } from 'src/environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class LoginService extends BaseService<Login> {
