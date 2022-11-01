@@ -13,10 +13,10 @@
     @extend %input-custom;
     &--company {
       margin-bottom: 15px;
-      width: 236px;
+      width: 100%;
     }
     &--category {
-      width: 236px;
+      width: 100%;
     }
   }
   @include brp(750) {
