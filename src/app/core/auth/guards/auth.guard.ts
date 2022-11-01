@@ -11,7 +11,7 @@ import {
   UrlTree,
 } from '@angular/router';
 import { Observable, of, switchMap } from 'rxjs';
-import { AuthService } from '../auth.service';
+import { AuthService } from 'src/app/services/app/auth.service';
 
 @Injectable({
   providedIn: 'root',
@@ -23,7 +23,7 @@ export class AuthGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean> | Promise<boolean> | boolean {
-    return this._authService.check().pipe(
+    return this._authService.authenticated$.pipe(
       switchMap((authenticated) => {
         if (!authenticated) {
           this._router.navigate(['']);

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { IItemPagination, IPagination } from '@core/models';
+import { IItemPagination, IPagination, Meta } from '@core/models';
 
 @Component({
   selector: 'app-pagination',
@@ -7,8 +7,13 @@ import { IItemPagination, IPagination } from '@core/models';
   styleUrls: ['./pagination.component.scss'],
 })
 export class PaginationComponent implements OnInit {
-  @Input() pagination?: IPagination;
+  _pagination!: Meta;
+  @Input() set pagination(meta: Meta) {
+    this._pagination = meta
+    this.initPagination(meta.page);
+  };
   @Output() actionPage = new EventEmitter<number>();
+  get pagination(): Meta { return this._pagination }
 
   public viewPage: IItemPagination[] = [];
   public selectPage: number = 1;

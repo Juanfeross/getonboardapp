@@ -5,6 +5,7 @@ import { Category } from 'src/app/models/category.model';
 import { Company } from 'src/app/models/company.model';
 import { CategoryService } from 'src/app/services/api/category.service';
 import { CompanyService } from 'src/app/services/api/company.service';
+import { JobService } from '../services';
 
 @Component({
   selector: 'app-filters',
@@ -13,6 +14,7 @@ import { CompanyService } from 'src/app/services/api/company.service';
 })
 export class FiltersComponent implements OnInit, OnDestroy {
   public filtersFrom = new FormGroup({
+    searchValue: new FormControl(''),
     category: new FormControl(''),
     company: new FormControl(''),
   });
@@ -23,6 +25,7 @@ export class FiltersComponent implements OnInit, OnDestroy {
   private onDestroy$ = new Subject<boolean>();
 
   constructor(
+    private jobService: JobService,
     private categoryServices: CategoryService,
     private companyService: CompanyService
   ) {}
@@ -35,6 +38,10 @@ export class FiltersComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.onDestroy$.next(true);
     this.onDestroy$.complete();
+  }
+
+  onSearchClick() {
+    this.jobService.findJobs(this.filtersFrom.get('searchValue')!.value!, 1);
   }
 
   private getDataFilters() {

@@ -16,17 +16,12 @@ export class UserService {
   constructor(private sessionStorage: SessionStorageService) {}
 
   set user(value: User) {
-    this.sessionStorage.setItem('user', value);
+    this.sessionStorage.stringifyItem('user', value);
     this._user.next(value);
   }
 
   get user$(): Observable<User> {
     return this._user.asObservable();
-  }
-
-  public setUser(user: User) {
-    this.sessionStorage.setItem('user', user);
-    this._user.next(user);
   }
 
   set selectedJobs(value: SelectedJob[]) {

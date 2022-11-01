@@ -1,14 +1,25 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationService } from '@core/confirmation/confirmation.service';
-import { IPagination, Meta } from '@core/models';
-import { UserService } from 'src/app/services/app/user.service';
-import { Subject, takeUntil } from 'rxjs';
+import { Meta } from '@core/models';
+import { SearchingEntity } from '@core/models/searching-entity.model';
+import {
+  combineLatest,
+  filter,
+  Observable,
+  Subject,
+  take,
+  takeUntil,
+} from 'rxjs';
 import { Job } from 'src/app/models/job.model';
+import { SelectedJobRequest } from 'src/app/models/selected-job-request.model';
+import { SelectedJob } from 'src/app/models/selected-job.model';
 import { User } from 'src/app/models/user.model';
-import { JobsService } from 'src/app/services/api/jobs.service';
 import { SelectedJobService } from 'src/app/services/api/selected-job.service';
+import { UserService as UserApiService } from 'src/app/services/api/user.service';
+import { UserService as UserAppService } from 'src/app/services/app/user.service';
 import { JobDetailsComponent } from '../job-details/job-details.component';
+import { JobService } from '../services';
 
 @Component({
   selector: 'app-list-jobs',
@@ -19,19 +30,70 @@ export class ListJobsComponent implements OnInit, OnDestroy {
   private readonly onDestroy$ = new Subject<boolean>();
 
   public jobs: Job[] = [];
-  public pagination?: Meta;
-  private user?: User;
+  public pagination: Meta = {
+    page: 1,
+    per_page: 12,
+    total_pages: 0,
+  };
+  private user$!: Observable<User>;
+  private selectedJobs$!: Observable<SelectedJob[]>;
+  private jobs$!: Observable<SearchingEntity<Job>>;
+
   constructor(
-    private jobsService: JobsService,
-    private _matDialog: MatDialog,
-    private _selectedJobService: SelectedJobService,
-    private _userService: UserService,
-    private _confirmationService: ConfirmationService
+    private userApiService: UserApiService,
+    private jobService: JobService,
+    private matDialog: MatDialog,
+    private userAppService: UserAppService,
+    private confirmationService: ConfirmationService
   ) {}
 
   ngOnInit(): void {
-    this.getListJobs(1);
-    this.getUser();
+    this.user$ = this.userAppService.user$.pipe(
+      takeUntil(this.onDestroy$)
+      // filter((user) => !!user.id)
+    );
+    this.selectedJobs$ = this.userAppService.selectedJobs$.pipe(
+      takeUntil(this.onDestroy$)
+    );
+    this.user$.subscribe((user) => {
+      if (!!user.id) this.getJobs(user.id);
+    });
+    this.jobService.findJobs('');
+
+    this.jobs$ = this.jobService
+      .getSearchingSubject()
+      .pipe(takeUntil(this.onDestroy$));
+
+    combineLatest([this.jobs$, this.selectedJobs$]).subscribe(
+      ([jobs, selectedJobs]) => {
+        if (jobs.searching) {
+          // this.spinner.show();
+        } else {
+          // this.spinner.hide();
+          if (selectedJobs.length > 0) {
+            this.jobs = jobs.entityList.reduce((jobs: Job[], job: any) => {
+              const selected = selectedJobs.find(
+                (selectedJob) => selectedJob.jobId === job.id
+              );
+              const selectedJob: Job = { ...job, selectedByUser: !!selected };
+              jobs.push(selectedJob);
+              return jobs;
+            }, []);
+          } else {
+            this.jobs = jobs.entityList;
+          }
+        }
+      }
+    );
+
+    this.jobService
+      .getPaginationSubject()
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe({
+        next: (result) => {
+          this.pagination = result;
+        },
+      });
   }
 
   ngOnDestroy(): void {
@@ -39,25 +101,29 @@ export class ListJobsComponent implements OnInit, OnDestroy {
     this.onDestroy$.complete();
   }
 
-  private getUser() {
-    this._userService.user$.pipe(takeUntil(this.onDestroy$)).subscribe((x) => {
-      console.log(x);
-      this.user = x;
-    });
-  }
-
-  public getListJobs(page: number) {
-    this.jobsService
-      .search()
+  private getJobs(userId: number) {
+    this.userApiService
+      .jobs(`/user/${userId}/job`)
       .pipe(takeUntil(this.onDestroy$))
-      .subscribe((x) => {
-        this.jobs = x.data;
-        this.pagination = x.meta;
+      .subscribe((response) => {
+        if (response.data.selectedJobs) {
+          this.userAppService.selectedJobs = response.data.selectedJobs;
+        }
       });
   }
 
+  public getListJobs(page: number) {
+    this.jobService.pageChange(page);
+    // this.jobService.search('', { page: page, per_page: 12 })
+    //   .pipe(takeUntil(this.onDestroy$))
+    //   .subscribe((x) => {
+    //     this.jobs = x.data;
+    //     this.pagination = x.meta;
+    //   });
+  }
+
   public showJobDetailsDialog(job: Job) {
-    const dialogRef = this._matDialog.open(JobDetailsComponent, {
+    const dialogRef = this.matDialog.open(JobDetailsComponent, {
       data: job,
       width: '700px',
       height: 'auto',
@@ -70,26 +136,32 @@ export class ListJobsComponent implements OnInit, OnDestroy {
         if (!response) {
           return;
         }
-        console.log(response);
       });
   }
 
-  public addJobToUser(job: Job) {
-    console.log(job, this.user);
-    if (this.user) {
-      this._selectedJobService
-        .add(this.user.id, [{ id: 0, jobId: job.id }])
-        .pipe(takeUntil(this.onDestroy$))
-        .subscribe((x) => {
-          console.log(x);
-        });
-    } else {
-      this.notifyLoginRequired();
-    }
+  public addToFavorites(job: Job) {
+    this.user$.subscribe((user) => {
+      if (!!!user.id) {
+        this.notifyLoginRequired();
+      } else {
+        const selectedJob: SelectedJob = { id: 0, jobId: job.id };
+        const selectedJobRequest: SelectedJobRequest = {
+          id: user.id,
+          selectedJobs: [selectedJob],
+        };
+        this.userApiService
+          .addJob(`/user/${user.id}/addjob`, selectedJobRequest)
+          .pipe(takeUntil(this.onDestroy$))
+          .subscribe((response) => {
+            if (response.data.selectedJobs)
+              this.userAppService.selectedJobs = response.data.selectedJobs;
+          });
+      }
+    });
   }
 
   private notifyLoginRequired() {
-    this._confirmationService.open({
+    this.confirmationService.open({
       title: '¿Tienes un usuario registrado?',
       message:
         '¡Es necesario ingresar con un usuario registrado para poder agregar las propuestas de trabajo a favoritos!',

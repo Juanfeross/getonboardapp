@@ -7,9 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { User } from 'src/app/models/user.model';
 import { LoginService } from 'src/app/services/api/login.service';
-import { SelectedJobService } from 'src/app/services/api/selected-job.service';
 import { AuthService } from 'src/app/services/app/auth.service';
 import { UserService } from 'src/app/services/app/user.service';
 
@@ -24,16 +22,15 @@ export class LoginComponent implements OnInit {
 
   constructor(
     public matDialogRef: MatDialogRef<LoginComponent>,
-    private _selectedJobs: SelectedJobService,
-    private _formBuilder: FormBuilder,
     private loginService: LoginService,
+    private formBuilder: FormBuilder,
     private authService: AuthService,
     private userService: UserService,
     @Inject(MAT_DIALOG_DATA) public _data: any
   ) {}
 
   ngOnInit(): void {
-    this.loginForm = this._formBuilder.group({
+    this.loginForm = this.formBuilder.group({
       email: new FormControl<string>('', [
         Validators.required,
         Validators.email,
@@ -55,7 +52,7 @@ export class LoginComponent implements OnInit {
       next: (response) => {
         if (response.data && response.data.user) {
           this.authService.authenticate(response.data);
-          this.userService.setUser(response.data.user);
+          this.userService.user = response.data.user;
         }
         this.matDialogRef.close();
       },

@@ -1,7 +1,7 @@
 <div class="list-jobs">
   <p class="list-jobs__quantity">
     Cantidad total:
-    {{ (pagination?.total_pages ?? 1) * (pagination?.per_page ?? 0) }}
+    {{ (pagination.total_pages ?? 1) * pagination.per_page }}
   </p>
   <div class="job" *ngFor="let job of jobs; let i = index">
     <p class="job__title">
@@ -9,9 +9,10 @@
     </p>
     <div class="job-actions">
       <button
+        *ngIf="!job.selectedByUser"
         mat-icon-button
         title="Add to my favorites"
-        (click)="addJobToUser(job)"
+        (click)="addToFavorites(job)"
       >
         <mat-icon>add_circle_outline</mat-icon>
       </button>

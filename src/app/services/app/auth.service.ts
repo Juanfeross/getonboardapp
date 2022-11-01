@@ -1,19 +1,10 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { UserService } from 'src/app/services/app/user.service';
-import { environment } from '@environment/environment';
-import {
-  BehaviorSubject,
-  catchError,
-  Observable,
-  of,
-  switchMap,
-  throwError,
-} from 'rxjs';
-import { LoginService } from '../api/login.service';
-import { SessionStorageService } from './session-storage.service';
-import { JwtService } from './jwt.service';
 import { Login } from '@core/models';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { User } from 'src/app/models/user.model';
+import { JwtService } from './jwt.service';
+import { SessionStorageService } from './session-storage.service';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root',
@@ -24,6 +15,7 @@ export class AuthService {
 
   constructor(
     private sessionStorage: SessionStorageService,
+    private userService: UserService,
     private jwt: JwtService
   ) {}
 
@@ -33,11 +25,20 @@ export class AuthService {
 
   public validateAuthentication() {
     const auth = this.sessionStorage.getItemString('accessToken');
+    const user = this.sessionStorage.getItemJSON('user');
     const isAuthenticated = !this.jwt.getTokenExpired(auth);
+
+    if (!isAuthenticated) {
+      this.signOut();
+    } else {
+      this.userService.user = user;
+    }
     this._authenticated$.next(isAuthenticated);
   }
 
   public signOut() {
+    this.userService.user = <User>{};
+    this.userService.selectedJobs = [];
     this.sessionStorage.clear();
     this._authenticated$.next(false);
   }

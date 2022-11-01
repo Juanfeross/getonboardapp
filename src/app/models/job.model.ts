@@ -31,4 +31,5 @@ export interface Job {
   id: string;
   type: string;
   attributes: JobAttributes;
+  selectedByUser: boolean;
 }

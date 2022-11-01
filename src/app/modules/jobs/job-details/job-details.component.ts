@@ -1,14 +1,13 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { AuthService } from '@core/auth/auth.service';
 import { ConfirmationService } from '@core/confirmation/confirmation.service';
 import { ErrorResponse } from '@core/models/error-response.model';
-import { UserService } from 'src/app/services/app/user.service';
 import { filter, take } from 'rxjs';
 import { Job } from 'src/app/models/job.model';
 import { SelectedJob } from 'src/app/models/selected-job.model';
 import { User } from 'src/app/models/user.model';
 import { SelectedJobService } from 'src/app/services/api/selected-job.service';
+import { UserService } from 'src/app/services/app/user.service';
 
 @Component({
   selector: 'app-job-details',
@@ -35,16 +34,20 @@ export class JobDetailsComponent implements OnInit {
         filter((selectedJobs) => selectedJobs.length > 0)
       )
       .subscribe((selectedJobs) => {
-        console.log(selectedJobs);
         this.alreadyAddedToFavorites =
           !!this.evaluateSelectedJobs(selectedJobs);
         this.selectedJobs = selectedJobs;
       });
 
-    this._userService.user$.pipe(take(1)).subscribe((user) => {
-      console.log(user);
-      this.user = user;
-    });
+    this._userService.user$
+      .pipe(
+        take(1),
+        filter((user) => !!user.id)
+      )
+      .subscribe((user) => {
+        console.log(user);
+        this.user = user;
+      });
   }
 
   addToFavorites(): void {
